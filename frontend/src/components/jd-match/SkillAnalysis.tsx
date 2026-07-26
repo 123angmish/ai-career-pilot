@@ -1,0 +1,14 @@
+import { Check, CircleAlert, KeyRound } from 'lucide-react';
+
+interface SkillAnalysisProps { matched: string[]; missing: string[]; }
+
+function ChipList({ items, matched }: { items: string[]; matched: boolean }) {
+  if (!items.length) return <p className="text-sm text-zinc-500 dark:text-zinc-400">No {matched ? 'matched' : 'missing'} terms were reported.</p>;
+  return <div className="flex flex-wrap gap-2">{items.map((item) => <span key={item} className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium ${matched ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300' : 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300'}`}>{matched ? <Check className="h-3.5 w-3.5" /> : <CircleAlert className="h-3.5 w-3.5" />}{item}</span>)}</div>;
+}
+
+export function SkillAnalysis({ matched, missing }: SkillAnalysisProps) {
+  const total = matched.length + missing.length;
+  const coverage = total ? Math.round((matched.length / total) * 100) : 0;
+  return <div className="grid gap-5 xl:grid-cols-2"><section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"><h2 className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-zinc-50"><Check className="h-4 w-4 text-emerald-600" />Matching skills</h2><p className="mb-4 mt-1 text-sm text-zinc-500 dark:text-zinc-400">Terms already represented in your resume.</p><ChipList items={matched} matched /></section><section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"><h2 className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-zinc-50"><CircleAlert className="h-4 w-4 text-amber-600" />Missing skills</h2><p className="mb-4 mt-1 text-sm text-zinc-500 dark:text-zinc-400">Prioritize these terms where they accurately reflect your experience.</p><ChipList items={missing} matched={false} /></section><section className="xl:col-span-2 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"><div className="flex items-center justify-between gap-4"><div><h2 className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-zinc-50"><KeyRound className="h-4 w-4 text-brand-600" />Keyword analysis</h2><p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{matched.length} matched and {missing.length} missing keywords.</p></div><span className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{coverage}%</span></div><div className="mt-4 h-2 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800"><div className="h-full rounded-full bg-brand-600 transition-all" style={{ width: `${coverage}%` }} /></div></section></div>;
+}

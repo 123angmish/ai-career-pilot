@@ -1,0 +1,7 @@
+import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
+export function MatchCharts({ matchedCount, missingCount, score }: { matchedCount: number; missingCount: number; score: number }) {
+  const coverage = [{ name: 'Matched', value: matchedCount }, { name: 'Missing', value: missingCount }];
+  const breakdown = [{ name: 'Overall', score }, { name: 'Keywords', score: matchedCount + missingCount ? Math.round((matchedCount / (matchedCount + missingCount)) * 100) : 0 }];
+  return <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"><h2 className="font-semibold text-zinc-900 dark:text-zinc-50">Match breakdown</h2><p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">A high-level view of overall and keyword coverage.</p><div className="mt-4 grid h-60 gap-4 md:grid-cols-2"><ResponsiveContainer width="100%" height="100%"><BarChart data={breakdown} margin={{ left: -20 }}><XAxis dataKey="name" tick={{ fontSize: 12 }} /><YAxis domain={[0, 100]} tick={{ fontSize: 12 }} /><Tooltip /><Bar dataKey="score" fill="#2546eb" radius={[6, 6, 0, 0]} /></BarChart></ResponsiveContainer><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={coverage} dataKey="value" nameKey="name" innerRadius={48} outerRadius={76} paddingAngle={4}>{coverage.map((entry) => <Cell key={entry.name} fill={entry.name === 'Matched' ? '#10b981' : '#f59e0b'} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer></div></section>;
+}

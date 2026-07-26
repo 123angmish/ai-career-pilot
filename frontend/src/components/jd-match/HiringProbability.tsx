@@ -1,0 +1,4 @@
+import { Sparkles } from 'lucide-react';
+import { getMatchStatus } from '../../types/jdMatch';
+
+export function HiringProbability({ score }: { score: number }) { const label = score >= 80 ? 'Highly recommended' : score >= 60 ? 'Recommended' : score >= 40 ? 'Needs improvement' : 'Unlikely match'; return <section className="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-950 p-5 text-white shadow-lg"><Sparkles className="h-5 w-5 text-brand-200" /><p className="mt-5 text-xs font-semibold uppercase tracking-widest text-brand-200">Hiring probability</p><h2 className="mt-1 text-2xl font-bold">{label}</h2><p className="mt-3 text-sm leading-6 text-brand-100">{score}% match · {getMatchStatus(score)}. Use the recommendations to improve the evidence and terminology in your resume.</p></section>; }

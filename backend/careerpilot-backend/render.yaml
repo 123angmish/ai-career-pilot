@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: careerpilot-backend
+    env: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_PROFILES_ACTIVE
+        value: dev
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250655368566D5971
+      - key: GEMINI_API_KEY
+        sync: false

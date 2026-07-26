@@ -1,0 +1,5 @@
+import { BriefcaseBusiness, GraduationCap, Layers3 } from 'lucide-react';
+
+const items = [{ icon: BriefcaseBusiness, title: 'Experience match', detail: 'Experience requirements are not included in the current match response.' }, { icon: GraduationCap, title: 'Education match', detail: 'Qualification comparison will appear when the API provides education data.' }, { icon: Layers3, title: 'Project match', detail: 'Relevant project scoring will appear when the API provides project data.' }];
+
+export function CompatibilityCards() { return <div className="grid gap-5 md:grid-cols-3">{items.map(({ icon: Icon, title, detail }) => <section key={title} className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"><Icon className="h-5 w-5 text-brand-600" /><h2 className="mt-3 font-semibold text-zinc-900 dark:text-zinc-50">{title}</h2><span className="mt-3 inline-block rounded-full bg-zinc-100 px-2 py-1 text-[11px] font-semibold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">Awaiting enriched data</span><p className="mt-3 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{detail}</p></section>)}</div>; }
