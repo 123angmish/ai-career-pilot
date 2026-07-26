@@ -1,6 +1,7 @@
 package com.careerpilot.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,9 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class RootController {
 
-    @GetMapping("/")
+    @GetMapping(value = {"/", "/error", "/api", "/status"})
     public ResponseEntity<Map<String, Object>> getRootStatus() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "ONLINE");
