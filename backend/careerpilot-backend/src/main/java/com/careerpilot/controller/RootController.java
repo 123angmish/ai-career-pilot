@@ -1,19 +1,18 @@
 package com.careerpilot.controller;
 
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/")
 @CrossOrigin(origins = "*")
 public class RootController {
 
-    @GetMapping(value = {"/", "/error", "/status"}, produces = MediaType.TEXT_HTML_VALUE)
-    public ResponseEntity<String> getRootDashboardHtml() {
-        String html = """
+    @GetMapping(produces = "text/html")
+    public String getRootDashboardHtml() {
+        return """
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -24,11 +23,11 @@ public class RootController {
                 <style>
                     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
                     body { background-color: #090d16; color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-                    .card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 2.5rem; max-width: 720px; width: 100%; shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-                    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; border-b: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.5rem; }
+                    .card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 2.5rem; max-width: 720px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+                    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1.5rem; }
                     .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.25rem; }
                     .logo-icon { background: linear-gradient(135deg, #2563eb, #4f46e5); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-                    .badge { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 14px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 8px; text-transform: uppercase; tracking: 1px; }
+                    .badge { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 14px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
                     .pulse { width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
                     h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(to right, #ffffff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
                     p.sub { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem; }
@@ -91,6 +90,5 @@ public class RootController {
             </body>
             </html>
             """;
-        return ResponseEntity.ok(html);
     }
 }
