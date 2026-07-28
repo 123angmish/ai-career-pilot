@@ -7,8 +7,6 @@ import {
   CheckCircle2, 
   FileText, 
   Zap, 
-  TrendingUp, 
-  Award, 
   ChevronRight, 
   Bot, 
   Compass, 
@@ -162,80 +160,6 @@ export const Home: React.FC = () => {
           </motion.div>
 
         </div>
-
-        {/* Hero Interactive Cockpit Mockup Preview */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.6 }}
-          className="mt-14 relative max-w-5xl mx-auto"
-        >
-          {/* Main Card Frame */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl p-4 sm:p-6 overflow-hidden relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-rose-400" />
-                <span className="w-3 h-3 rounded-full bg-amber-400" />
-                <span className="w-3 h-3 rounded-full bg-emerald-400" />
-                <span className="text-xs font-bold text-slate-400 ml-2">careerpilot.ai / cockpit</span>
-              </div>
-              <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                ● Live AI Placement Cockpit
-              </span>
-            </div>
-
-            {/* Dashboard Mockup Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-              
-              {/* Card 1: ATS Resume Score */}
-              <Link to="/resumes/analysis" className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-indigo-700">ATS Audit Score</span>
-                  <Award className="h-4 w-4 text-indigo-600" />
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold text-slate-900 font-display">94/100</span>
-                  <span className="text-xs font-bold text-emerald-600">+12% vs avg</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div className="bg-indigo-600 h-full w-[94%]" />
-                </div>
-                <p className="text-xs text-slate-500 font-medium">9 out of 10 FAANG keywords matched cleanly.</p>
-              </Link>
-
-              {/* Card 2: Top Job Recommendation */}
-              <Link to="/services/global-careers" className="p-5 rounded-2xl bg-purple-50/50 border border-purple-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-purple-700">Top Match Job</span>
-                  <TrendingUp className="h-4 w-4 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-extrabold text-slate-900">Software Engineer II</h4>
-                  <p className="text-xs text-slate-500 font-medium">Microsoft · Bengaluru · ₹24.5 LPA</p>
-                </div>
-                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 text-[11px] font-extrabold">
-                  <Sparkles className="h-3 w-3" /> 98% Skill Match
-                </div>
-              </Link>
-
-              {/* Card 3: Technical Mock Loop */}
-              <Link to="/interview/mock" className="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-cyan-700">Mock Interview</span>
-                  <Video className="h-4 w-4 text-cyan-600" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-extrabold text-slate-900">System Design & DSA</h4>
-                  <p className="text-xs text-slate-500 font-medium">Verdict: Strong Hire (Communication: 92%)</p>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full w-[88%]" />
-                </div>
-              </Link>
-
-            </div>
-          </div>
-        </motion.div>
 
       </section>
 
