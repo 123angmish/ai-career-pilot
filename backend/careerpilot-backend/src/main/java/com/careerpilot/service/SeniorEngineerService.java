@@ -4,7 +4,6 @@ import com.careerpilot.entity.SeniorEngineer;
 import com.careerpilot.repository.SeniorEngineerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +18,9 @@ public class SeniorEngineerService {
             if (list.isEmpty()) {
                 initDefaultEngineers();
                 list = engineerRepository.findAll();
+                if (list.isEmpty()) {
+                    list = getDefaultEngineersList();
+                }
             }
             return list;
         } catch (Exception e) {
@@ -40,7 +42,7 @@ public class SeniorEngineerService {
         }
     }
 
-    private List<SeniorEngineer> getDefaultEngineersList() {
+    public List<SeniorEngineer> getDefaultEngineersList() {
         SeniorEngineer e1 = SeniorEngineer.builder()
                 .id(1L)
                 .name("Siddharth Sharma")
