@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mock-bookings")
-@CrossOrigin(origins = "*")
 public class MockBookingController {
 
     @Autowired
