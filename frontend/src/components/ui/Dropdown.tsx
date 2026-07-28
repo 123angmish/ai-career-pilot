@@ -71,7 +71,7 @@ export const DropdownMenu: React.FC<{
 
   return (
     <div
-      className={`absolute ${alignClasses} mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1 ${className}`}
+      className={`absolute ${alignClasses} mt-2 w-56 rounded-2xl shadow-xl bg-white border border-slate-200 focus:outline-none z-50 py-1 ${className}`}
     >
       {children}
     </div>
@@ -96,7 +96,7 @@ export const DropdownItem: React.FC<{
   return (
     <button
       onClick={handleClick}
-      className={`w-full text-left px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center transition-colors ${className}`}
+      className={`w-full text-left px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center transition-colors cursor-pointer ${className}`}
     >
       {children}
     </button>

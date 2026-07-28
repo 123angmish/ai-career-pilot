@@ -74,7 +74,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
     }
   ];
 
-  // Effective expanded state: true if pinned OR hovered
   const effectiveExpanded = !isCollapsed || isHovered;
 
   return (
@@ -83,19 +82,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
       onMouseLeave={() => isCollapsed && setIsHovered(false)}
       animate={{ width: effectiveExpanded ? 260 : 72 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="relative h-screen bg-[#050816]/90 backdrop-blur-2xl border-r border-white/10 flex flex-col justify-between z-40 select-none shadow-2xl overflow-hidden"
+      className="relative h-screen bg-white/95 backdrop-blur-2xl border-r border-slate-200 flex flex-col justify-between z-40 select-none shadow-sm overflow-hidden"
     >
       {/* Top Header Logo */}
       <div>
         <div
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="h-16 flex items-center justify-between px-4 border-b border-white/10 cursor-pointer hover:bg-white/5 transition-colors"
+          className="h-16 flex items-center justify-between px-4 border-b border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors"
           title={effectiveExpanded ? 'Click to collapse sidebar' : 'Click to expand sidebar'}
         >
-          <div className="flex items-center gap-3 font-bold text-white overflow-hidden">
-            <div className="relative flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-cyan-500 text-white shrink-0 shadow-lg shadow-indigo-500/30">
-              <Sparkles className="h-5 w-5 animate-pulse" />
-              <div className="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-md -z-10" />
+          <div className="flex items-center gap-3 font-bold text-slate-900 overflow-hidden">
+            <div className="relative flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-600 text-white shrink-0 shadow-md shadow-indigo-500/20">
+              <Sparkles className="h-5 w-5" />
             </div>
 
             <AnimatePresence>
@@ -104,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                  className="tracking-tight text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-indigo-400 whitespace-nowrap"
+                  className="tracking-tight text-lg font-black text-slate-900 font-display whitespace-nowrap"
                 >
                   CareerPilot
                 </motion.span>
@@ -118,10 +116,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                 e.stopPropagation();
                 setIsCollapsed(!isCollapsed);
               }}
-              className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
               title={isCollapsed ? 'Pin Sidebar' : 'Unpin Sidebar'}
             >
-              <Pin className={`h-4 w-4 transition-transform ${isCollapsed ? 'rotate-45 text-zinc-500' : 'text-indigo-400'}`} />
+              <Pin className={`h-4 w-4 transition-transform ${isCollapsed ? 'rotate-45 text-slate-400' : 'text-indigo-600'}`} />
             </button>
           )}
         </div>
@@ -134,7 +132,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-widest text-indigo-300/60 uppercase"
+                  className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-widest text-slate-400 uppercase font-sans"
                 >
                   {group.category}
                 </motion.div>
@@ -146,16 +144,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      `relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 group ${
+                      `relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 group ${
                         isActive
-                          ? 'text-white font-semibold bg-gradient-to-r from-indigo-600/30 to-violet-600/20 border border-indigo-500/40 shadow-lg shadow-indigo-500/10'
-                          : 'text-zinc-400 hover:text-zinc-100 hover:bg-white/5 border border-transparent'
+                          ? 'text-indigo-700 bg-indigo-50/80 border border-indigo-100 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
                       }`
                     }
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon className={`h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${isActive ? 'text-indigo-400' : 'text-zinc-400 group-hover:text-white'}`} />
+                        <Icon className={`h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-700'}`} />
 
                         {effectiveExpanded && (
                           <span className="truncate">{item.name}</span>
@@ -164,7 +162,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                         {isActive && (
                           <motion.div
                             layoutId="activeGlow"
-                            className="absolute left-0 w-1.5 h-6 rounded-r-full bg-gradient-to-b from-indigo-400 to-violet-500 shadow-[0_0_12px_rgba(99,102,241,0.8)]"
+                            className="absolute left-0 w-1.5 h-6 rounded-r-full bg-indigo-600"
                           />
                         )}
                       </>
@@ -178,11 +176,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
       </div>
 
       {/* Footer Collapse Toggle */}
-      <div className="p-3 border-t border-white/10 flex items-center justify-between bg-white/[0.02]">
+      <div className="p-3 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
         {effectiveExpanded && (
-          <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
-            <div className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="text-[10px] font-extrabold text-indigo-300 uppercase tracking-widest">
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100">
+            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-extrabold text-indigo-700 uppercase tracking-widest">
               v2.5 AI Engine
             </span>
           </div>
@@ -190,7 +188,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="p-2 rounded-xl border border-white/10 hover:bg-white/10 text-zinc-400 hover:text-white transition-all ml-auto"
+          className="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all ml-auto bg-white shadow-xs"
         >
           {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>

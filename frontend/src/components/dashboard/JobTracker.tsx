@@ -180,32 +180,32 @@ export const JobTracker: React.FC = () => {
   const getPlatformBadge = (platform: ApplicationItem['platform']) => {
     switch (platform) {
       case 'LinkedIn':
-        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+        return 'bg-blue-50 text-blue-700 border-blue-200';
       case 'Naukri':
-        return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+        return 'bg-indigo-50 text-indigo-700 border-indigo-200';
       case 'Indeed':
-        return 'bg-sky-500/10 text-sky-400 border-sky-500/30';
+        return 'bg-sky-50 text-sky-700 border-sky-200';
       case 'Glassdoor':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Wellfound':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+        return 'bg-rose-50 text-rose-700 border-rose-200';
       default:
-        return 'bg-purple-500/10 text-purple-400 border-purple-500/30';
+        return 'bg-purple-50 text-purple-700 border-purple-200';
     }
   };
 
   const getStatusBadge = (status: ApplicationItem['status']) => {
     switch (status) {
       case 'Offer':
-        return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 font-extrabold shadow-[0_0_12px_rgba(16,185,129,0.3)]';
+        return 'bg-emerald-50 text-emerald-800 border-emerald-300 font-extrabold';
       case 'Interviewing':
-        return 'bg-purple-500/20 text-purple-300 border-purple-500/50 font-extrabold shadow-[0_0_12px_rgba(168,85,247,0.3)]';
+        return 'bg-purple-50 text-purple-800 border-purple-300 font-extrabold';
       case 'Applied':
-        return 'bg-indigo-500/20 text-indigo-300 border-indigo-500/50 font-extrabold';
+        return 'bg-indigo-50 text-indigo-800 border-indigo-300 font-extrabold';
       case 'Rejected':
-        return 'bg-rose-500/20 text-rose-300 border-rose-500/50 font-extrabold';
+        return 'bg-rose-50 text-rose-800 border-rose-300 font-extrabold';
       default:
-        return 'bg-zinc-500/20 text-zinc-300 border-zinc-500/40 font-semibold';
+        return 'bg-slate-100 text-slate-800 border-slate-300 font-semibold';
     }
   };
 
@@ -217,40 +217,40 @@ export const JobTracker: React.FC = () => {
   const conversionRate = apps.length > 0 ? Math.round((interviewCount / apps.length) * 100) : 0;
 
   return (
-    <Card className="glass-card rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl">
+    <Card className="bg-white rounded-3xl border border-slate-200 overflow-hidden relative shadow-sm">
       {toastMsg && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="absolute top-4 right-4 z-40 flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-emerald-600 text-white shadow-2xl text-xs font-bold border border-emerald-400/30"
+          className="absolute top-4 right-4 z-40 flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-emerald-600 text-white shadow-lg text-xs font-bold"
         >
           <CheckCircle2 className="h-4 w-4" />
           {toastMsg}
         </motion.div>
       )}
 
-      <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5 p-6">
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5 p-6">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-gradient-to-tr from-indigo-500/20 to-violet-500/20 text-indigo-400 border border-indigo-500/30 shadow-lg shadow-indigo-500/10">
+            <div className="p-2.5 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 shadow-2xs">
               <Briefcase className="h-5 w-5" />
             </div>
-            <CardTitle className="text-lg font-extrabold tracking-tight text-white font-display">Automated Job Application Tracker</CardTitle>
-            <span className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase tracking-wider">
-              <Activity className="h-3 w-3 animate-pulse text-emerald-400" /> Live Web Tracker
+            <CardTitle className="text-lg font-extrabold tracking-tight text-slate-900 font-display">Automated Job Application Tracker</CardTitle>
+            <span className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold uppercase tracking-wider">
+              <Activity className="h-3 w-3 animate-pulse text-emerald-600" /> Live Web Tracker
             </span>
           </div>
-          <CardDescription className="text-xs text-zinc-400 mt-1">
+          <CardDescription className="text-xs text-slate-500 mt-1">
             Paste job links from LinkedIn, Indeed, Naukri & Glassdoor. Auto-detects platform, parses job details, and tracks recruiter activities.
           </CardDescription>
         </div>
 
         <div className="flex items-center gap-2.5 shrink-0">
-          <Button variant="outline" size="sm" onClick={handleAutoSync} isLoading={isSyncing} className="text-xs font-bold rounded-xl border-white/10 bg-white/5 hover:bg-white/10 text-zinc-200">
-            <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-indigo-400" /> Auto Sync Portals
+          <Button variant="outline" size="sm" onClick={handleAutoSync} isLoading={isSyncing} className="text-xs font-bold rounded-xl border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+            <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-indigo-600" /> Auto Sync Portals
           </Button>
-          <Button size="sm" onClick={() => setShowAddForm(!showAddForm)} className="text-xs font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl shadow-lg shadow-indigo-500/25">
+          <Button size="sm" onClick={() => setShowAddForm(!showAddForm)} className="text-xs font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm">
             <Plus className="h-4 w-4 mr-1" /> Add Job Link
           </Button>
         </div>
@@ -258,24 +258,24 @@ export const JobTracker: React.FC = () => {
 
       <CardContent className="space-y-5 p-6">
         {/* Automated Intelligence Metrics Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">Total Tracked</span>
-            <p className="text-lg font-black text-white font-display">{apps.length} Jobs</p>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Total Tracked</span>
+            <p className="text-lg font-black text-slate-900 font-display">{apps.length} Jobs</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">Interview Rate</span>
-            <p className="text-lg font-black text-purple-400 font-display">{conversionRate}%</p>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Interview Rate</span>
+            <p className="text-lg font-black text-purple-700 font-display">{conversionRate}%</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">Offers Received</span>
-            <p className="text-lg font-black text-emerald-400 font-display">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Offers Received</span>
+            <p className="text-lg font-black text-emerald-700 font-display">
               {apps.filter(a => a.status === 'Offer').length} Offer
             </p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">Auto Reminders</span>
-            <p className="text-xs font-bold text-amber-400 flex items-center gap-1.5 mt-1">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Auto Reminders</span>
+            <p className="text-xs font-bold text-amber-700 flex items-center gap-1.5 mt-1">
               <Bell className="h-3.5 w-3.5" /> Active Auto-Tracking
             </p>
           </div>
@@ -289,8 +289,8 @@ export const JobTracker: React.FC = () => {
               onClick={() => setSelectedFilter(plat)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all shrink-0 border ${
                 selectedFilter === plat
-                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-indigo-400/30 shadow-md shadow-indigo-500/20'
-                  : 'bg-white/5 border-white/10 text-zinc-400 hover:text-white hover:bg-white/10'
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
               {plat} ({plat === 'All' ? apps.length : apps.filter(a => a.platform === plat).length})
@@ -306,10 +306,10 @@ export const JobTracker: React.FC = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               onSubmit={handleAddApplication} 
-              className="p-5 rounded-2xl bg-white/[0.04] border border-indigo-500/30 space-y-4 shadow-2xl backdrop-blur-xl"
+              className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4 shadow-sm"
             >
               <div className="space-y-1.5">
-                <label className="block text-xs font-extrabold uppercase tracking-wider text-indigo-300">
+                <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600">
                   Paste Job Listing URL (LinkedIn / Indeed / Naukri)
                 </label>
                 <div className="flex gap-2">
@@ -318,7 +318,7 @@ export const JobTracker: React.FC = () => {
                     placeholder="e.g. https://www.linkedin.com/jobs/view/382910..."
                     value={jobUrlInput}
                     onChange={(e) => handleUrlChange(e.target.value)}
-                    className="flex-1 rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="flex-1 rounded-xl border border-slate-200 bg-white p-2.5 text-xs text-slate-900 font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                   <span className={`px-3 py-2 rounded-xl text-xs font-extrabold border flex items-center gap-1.5 ${getPlatformBadge(detectedPlatform)}`}>
                     <Globe className="h-3.5 w-3.5" /> {detectedPlatform}
@@ -328,34 +328,34 @@ export const JobTracker: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-zinc-400 mb-1">Company Name *</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">Company Name *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Meta, Uber, Google"
                     value={companyInput}
                     onChange={(e) => setCompanyInput(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs text-slate-900 font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-zinc-400 mb-1">Target Job Title *</label>
+                  <label className="block text-xs font-bold text-slate-600 mb-1">Target Job Title *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Senior Frontend Engineer"
                     value={roleInput}
                     onChange={(e) => setRoleInput(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs text-slate-900 font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="flex justify-end gap-2 pt-1">
-                <Button type="button" variant="outline" size="sm" onClick={() => setShowAddForm(false)} className="border-white/10 text-zinc-400 hover:text-white">
+                <Button type="button" variant="outline" size="sm" onClick={() => setShowAddForm(false)} className="border-slate-200 text-slate-600 hover:bg-slate-100">
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary" size="sm" className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold">
+                <Button type="submit" variant="primary" size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold">
                   <Sparkles className="h-3.5 w-3.5 mr-1.5" /> Add Application
                 </Button>
               </div>
@@ -364,7 +364,7 @@ export const JobTracker: React.FC = () => {
         </AnimatePresence>
 
         {/* Applications List */}
-        <div className="divide-y divide-white/10">
+        <div className="divide-y divide-slate-100">
           <AnimatePresence>
             {filteredApps.map((app) => (
               <motion.div
@@ -372,21 +372,21 @@ export const JobTracker: React.FC = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-white/[0.03] px-3 rounded-2xl transition-colors"
+                className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/80 px-3 rounded-2xl transition-colors"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-extrabold text-white">{app.company}</h4>
+                    <h4 className="text-sm font-extrabold text-slate-900">{app.company}</h4>
                     <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-extrabold ${getPlatformBadge(app.platform)}`}>
                       {app.platform}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-400 font-medium flex items-center gap-2">
+                  <p className="text-xs text-slate-500 font-medium flex items-center gap-2">
                     <span>{app.role}</span>
                     <span>• {app.date}</span>
                   </p>
-                  <p className="text-[11px] text-zinc-500 italic flex items-center gap-1.5">
-                    <Activity className="h-3 w-3 text-indigo-400 shrink-0" />
+                  <p className="text-[11px] text-slate-400 italic flex items-center gap-1.5">
+                    <Activity className="h-3 w-3 text-indigo-600 shrink-0" />
                     <span>{app.lastActivity}</span>
                   </p>
                 </div>
@@ -397,7 +397,7 @@ export const JobTracker: React.FC = () => {
                       href={app.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-2 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-indigo-400 transition-colors"
+                      className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 transition-colors"
                       title="Open job posting on portal"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
@@ -407,7 +407,7 @@ export const JobTracker: React.FC = () => {
                   <select
                     value={app.status}
                     onChange={(e) => handleStatusChange(app.id, e.target.value as ApplicationItem['status'])}
-                    className={`text-[11px] font-extrabold px-3 py-1.5 rounded-xl border appearance-none cursor-pointer focus:outline-none bg-[#050816] ${getStatusBadge(
+                    className={`text-[11px] font-extrabold px-3 py-1.5 rounded-xl border appearance-none cursor-pointer focus:outline-none bg-white ${getStatusBadge(
                       app.status
                     )}`}
                   >
@@ -418,7 +418,7 @@ export const JobTracker: React.FC = () => {
                     <option value="Rejected">Rejected</option>
                   </select>
 
-                  <button onClick={() => handleDelete(app.id)} className="text-zinc-500 hover:text-rose-400 p-2 rounded-xl hover:bg-white/5 transition-colors">
+                  <button onClick={() => handleDelete(app.id)} className="text-slate-400 hover:text-rose-600 p-2 rounded-xl hover:bg-slate-100 transition-colors">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>

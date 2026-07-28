@@ -15,14 +15,14 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none';
+  const baseStyles = 'inline-flex items-center justify-center font-bold rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
 
   const variants = {
-    primary: 'bg-brand-600 hover:bg-brand-700 text-white dark:bg-brand-500 dark:hover:bg-brand-600',
-    secondary: 'bg-zinc-100 hover:bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-100',
-    outline: 'border border-zinc-300 hover:bg-zinc-50 text-zinc-700 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:text-zinc-300',
-    danger: 'bg-red-600 hover:bg-red-700 text-white dark:bg-red-500 dark:hover:bg-red-600',
-    ghost: 'hover:bg-zinc-100 text-zinc-700 dark:hover:bg-zinc-800 dark:text-zinc-300',
+    primary: 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs hover:shadow-md',
+    secondary: 'bg-slate-100 hover:bg-slate-200 text-slate-900',
+    outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs',
+    danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-xs',
+    ghost: 'hover:bg-slate-100 text-slate-700',
   };
 
   const sizes = {

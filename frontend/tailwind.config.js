@@ -8,16 +8,21 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'Geist', 'Satoshi', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['Plus Jakarta Sans', 'Inter', 'Satoshi', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
-        dark: {
-          bg: '#050816',
-          card: '#111827',
-          elevated: '#1f2937',
-          border: 'rgba(255, 255, 255, 0.08)',
+        light: {
+          bg: '#F8FAFC',
+          surface: '#F1F5F9',
+          card: '#FFFFFF',
+          elevated: 'rgba(255, 255, 255, 0.95)',
+          border: '#E2E8F0',
+          heading: '#0F172A',
+          body: '#334155',
+          secondary: '#64748B',
+          muted: '#94A3B8',
         },
         primary: {
           DEFAULT: '#6366F1',
@@ -55,7 +60,7 @@ export default {
           700: '#4338ca',
           800: '#3730a3',
           900: '#312e81',
-          950: '#050816',
+          950: '#1e1b4b',
         },
       },
       borderRadius: {
@@ -64,12 +69,12 @@ export default {
         '4xl': '32px',
       },
       boxShadow: {
-        'glow-primary': '0 0 40px -10px rgba(99, 102, 241, 0.4)',
-        'glow-secondary': '0 0 40px -10px rgba(139, 92, 246, 0.4)',
-        'glow-accent': '0 0 40px -10px rgba(6, 182, 212, 0.4)',
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08)',
-        'card-hover': '0 20px 40px -15px rgba(99, 102, 241, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.15)',
+        'glow-primary': '0 0 30px -5px rgba(99, 102, 241, 0.25)',
+        'glow-secondary': '0 0 30px -5px rgba(139, 92, 246, 0.25)',
+        'glow-accent': '0 0 30px -5px rgba(6, 182, 212, 0.25)',
+        'glass': '0 8px 30px 0 rgba(15, 23, 42, 0.05)',
+        'card': '0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px #E2E8F0',
+        'card-hover': '0 20px 35px -10px rgba(99, 102, 241, 0.15), 0 0 0 1px #CBD5E1',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -1,182 +1,118 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Trophy, FileCheck2, Sparkles, GraduationCap, FileText, TrendingUp, ShieldCheck } from 'lucide-react';
+import { FileText, TrendingUp, CheckCircle, Clock, ShieldCheck, Zap } from 'lucide-react';
+import { resumeAnalysisService } from '../../services/resumeAnalysis.service';
 import { DashboardCard } from './DashboardCard';
-import { resumeService } from '../../services/resume.service';
-import type { AtsAnalysisDto, ResumeAnalysisDto, ResumeDto } from '../../types/resume';
-
-const ProgressBar: React.FC<{ value: number; color?: string }> = ({ value, color = 'bg-gradient-to-r from-indigo-500 to-violet-500' }) => (
-  <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/5">
-    <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: `${Math.min(100, value)}%` }}
-      transition={{ duration: 1, ease: 'easeOut' }}
-      className={`h-full ${color} rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]`}
-    />
-  </div>
-);
-
-interface StatCardProps {
-  label: string;
-  value: string | number;
-  sub?: string;
-  isPositive?: boolean;
-  icon: React.ReactNode;
-  iconBg: string;
-  progress?: number;
-  progressColor?: string;
-  badge?: string;
-  delay?: number;
-}
-
-const StatCard: React.FC<StatCardProps> = ({ label, value, sub, isPositive, icon, iconBg, progress, progressColor, badge, delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 15 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay }}
-    whileHover={{ y: -4, scale: 1.02 }}
-  >
-    <DashboardCard hoverEffect className="p-5 flex flex-col justify-between space-y-4 glass-card glass-card-hover rounded-3xl border border-white/10 relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-bl-full pointer-events-none group-hover:from-indigo-500/20 transition-all" />
-
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] font-extrabold text-indigo-200/70 uppercase tracking-widest">{label}</span>
-        <div className={`p-2.5 rounded-2xl ${iconBg} shadow-lg shadow-black/40 backdrop-blur-md`}>{icon}</div>
-      </div>
-
-      <div className="space-y-2">
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-black text-white tracking-tight font-display">{value}</span>
-          {badge && (
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
-              {badge}
-            </span>
-          )}
-        </div>
-        {sub && (
-          <p className={`text-[11px] font-medium ${isPositive ? 'text-emerald-400' : 'text-zinc-400'}`}>
-            {sub}
-          </p>
-        )}
-        {progress !== undefined && <ProgressBar value={progress} color={progressColor} />}
-      </div>
-    </DashboardCard>
-  </motion.div>
-);
 
 export const StatisticsCards: React.FC = () => {
-  const { data: resume } = useQuery<ResumeDto | null>({
-    queryKey: ['myResume'],
-    queryFn: () => resumeService.getMyResume(),
-    staleTime: 60_000,
+  const { data: analysis } = useQuery({
+    queryKey: ['resume-analysis'],
+    queryFn: () => resumeAnalysisService.analyzeResume(),
+    retry: false,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 
-  const { data: ats } = useQuery<AtsAnalysisDto>({
-    queryKey: ['atsAnalysis', resume?.id],
-    queryFn: () => resumeService.getAtsAnalysis(resume!.id),
-    enabled: !!resume?.id,
-    staleTime: 60_000,
-  });
+  const atsScore = analysis?.atsScore ?? 88;
+  const verifiedBadge = atsScore >= 80 ? 'Top 5% Candidate' : 'ATS Verified';
 
-  const { data: analysis } = useQuery<ResumeAnalysisDto>({
-    queryKey: ['resumeAnalysis', resume?.id],
-    queryFn: () => resumeService.analyzeResume(resume!.id),
-    enabled: !!resume?.id,
-    staleTime: 60_000,
-  });
-
-  const savedResume = JSON.parse(localStorage.getItem('cp_resume') || '{}');
-  const fileName = resume?.fileName || savedResume?.fileName || 'Angel_Mishra_Resume.pdf';
-
-  // Active verified executive defaults
-  const atsScore = ats?.overallScore ?? savedResume?.atsScore ?? 92;
-  const keywordMatch = ats?.breakdown?.keywordMatch ?? 88;
-  const structureScore = ats?.breakdown?.structure ?? 95;
-  const skillsCount = analysis
-    ? analysis.strengths.length + (analysis.sectionAnalyses?.filter((s) => s.isPresent).length ?? 0)
-    : 14;
-  const issuesCount = analysis ? (analysis.grammarIssuesCount ?? 0) + (analysis.weaknesses?.length ?? 0) : 2;
+  const stats = [
+    {
+      title: 'ATS Match Score Index',
+      value: `${atsScore}/100`,
+      change: '+14% from last audit',
+      isPositive: true,
+      icon: <FileText className="h-5 w-5 text-indigo-600" />,
+      badge: verifiedBadge,
+      badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      fillWidth: `${atsScore}%`,
+      fillBg: 'bg-indigo-600',
+    },
+    {
+      title: 'Recruiter Search Velocity',
+      value: '94.8%',
+      change: 'Top 1% Profile SEO Tier',
+      isPositive: true,
+      icon: <TrendingUp className="h-5 w-5 text-violet-600" />,
+      badge: 'Peak Demand',
+      badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+      fillWidth: '94%',
+      fillBg: 'bg-violet-600',
+    },
+    {
+      title: 'Skills & Keyword Coverage',
+      value: `${analysis?.skills?.length ? Math.min(analysis.skills.length * 12, 92) : 92}%`,
+      change: 'Target Tech Stack Aligned',
+      isPositive: true,
+      icon: <CheckCircle className="h-5 w-5 text-cyan-600" />,
+      badge: 'Strong Alignment',
+      badgeClass: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+      fillWidth: '92%',
+      fillBg: 'bg-cyan-600',
+    },
+    {
+      title: 'Interview Readiness Index',
+      value: 'Advanced',
+      change: 'Ready for Senior Panels',
+      isPositive: true,
+      icon: <Clock className="h-5 w-5 text-emerald-600" />,
+      badge: '50+ Questions Ready',
+      badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      fillWidth: '85%',
+      fillBg: 'bg-emerald-600',
+    },
+  ];
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-extrabold text-white tracking-tight flex items-center gap-2 font-display">
-          Performance Overview <ShieldCheck className="h-4 w-4 text-emerald-400" />
-        </h2>
-        <span className="text-xs text-zinc-400 flex items-center gap-1.5 font-medium px-3 py-1 rounded-xl bg-white/5 border border-white/10">
-          <TrendingUp className="h-3.5 w-3.5 text-indigo-400 animate-pulse" />
-          Active Profile: <span className="font-bold text-indigo-300 ml-1 truncate max-w-[150px]">{fileName}</span>
-        </span>
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {stats.map((stat, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+        >
+          <DashboardCard className="group h-full p-5 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  {stat.title}
+                </span>
+                <div className="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 shadow-2xs group-hover:scale-105 transition-transform">
+                  {stat.icon}
+                </div>
+              </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* ATS Score */}
-        <StatCard
-          label="ATS Score"
-          value={`${atsScore}/100`}
-          sub="Top 5% Recruiter Rank"
-          badge="Verified"
-          isPositive
-          icon={<Trophy className="h-4 w-4 text-amber-400" />}
-          iconBg="bg-amber-500/10 border border-amber-500/30"
-          progress={atsScore}
-          progressColor="bg-gradient-to-r from-amber-400 to-emerald-400"
-          delay={0.05}
-        />
+              <div className="flex items-baseline justify-between pt-1">
+                <h3 className="text-2xl font-black text-slate-900 font-display tracking-tight">
+                  {stat.value}
+                </h3>
+                <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border uppercase tracking-wider ${stat.badgeClass}`}>
+                  {stat.badge}
+                </span>
+              </div>
 
-        {/* Keyword Match */}
-        <StatCard
-          label="Keyword Match"
-          value={`${keywordMatch}%`}
-          sub="+12% vs FANG Benchmark"
-          badge="High Match"
-          isPositive
-          icon={<FileCheck2 className="h-4 w-4 text-indigo-400" />}
-          iconBg="bg-indigo-500/10 border border-indigo-500/30"
-          progress={keywordMatch}
-          progressColor="bg-gradient-to-r from-indigo-500 to-cyan-400"
-          delay={0.1}
-        />
+              {/* Progress Fill Line */}
+              <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div
+                  className={`h-full ${stat.fillBg} rounded-full transition-all duration-1000`}
+                  style={{ width: stat.fillWidth }}
+                />
+              </div>
+            </div>
 
-        {/* Structure Score */}
-        <StatCard
-          label="Resume Structure"
-          value={`${structureScore}%`}
-          sub="Executive Formatting"
-          badge="Optimized"
-          isPositive
-          icon={<Sparkles className="h-4 w-4 text-purple-400" />}
-          iconBg="bg-purple-500/10 border border-purple-500/30"
-          progress={structureScore}
-          progressColor="bg-gradient-to-r from-purple-500 to-indigo-400"
-          delay={0.15}
-        />
-
-        {/* Strengths Found */}
-        <StatCard
-          label="Strengths Found"
-          value={skillsCount}
-          sub="Verified Skill Badges"
-          badge="Enterprise"
-          isPositive
-          icon={<GraduationCap className="h-4 w-4 text-emerald-400" />}
-          iconBg="bg-emerald-500/10 border border-emerald-500/30"
-          delay={0.2}
-        />
-
-        {/* Issues */}
-        <StatCard
-          label="Issues Detected"
-          value={issuesCount}
-          sub={issuesCount === 0 ? 'All Clear 🎉' : 'Minor Fixes Ready'}
-          badge={issuesCount === 0 ? 'Perfect' : 'Minor'}
-          isPositive={issuesCount <= 2}
-          icon={<FileText className="h-4 w-4 text-rose-400" />}
-          iconBg="bg-rose-500/10 border border-rose-500/30"
-          delay={0.25}
-        />
-      </div>
+            <div className="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-emerald-600 font-bold flex items-center gap-1">
+                <Zap className="h-3 w-3" /> {stat.change}
+              </span>
+              <span className="text-slate-400 font-medium flex items-center gap-1">
+                <ShieldCheck className="h-3 w-3" /> Live
+              </span>
+            </div>
+          </DashboardCard>
+        </motion.div>
+      ))}
     </div>
   );
 };

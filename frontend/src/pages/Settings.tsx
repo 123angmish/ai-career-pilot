@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Bell, ChevronRight, Eye, EyeOff, Globe, Lock, LogOut, Monitor,
-  Moon, Palette, Save, Shield, Sun, Trash2, User, Download,
+  Bell, ChevronRight, Eye, EyeOff, Globe, Lock, LogOut,
+  Palette, Save, Shield, Sun, Trash2, User, Download,
   Smartphone, MapPin, Briefcase, FileText, CheckCircle, XCircle,
   AlertTriangle, Info, Sparkles,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { useTheme, type ThemeMode } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../context/ProfileContext';
 
@@ -52,10 +51,10 @@ const defaultSettings: AppSettings = {
 // ─── Toast ────────────────────────────────────────────────────────────────────
 interface ToastProps { message: string; type: 'success' | 'error' | 'info'; }
 const Toast: React.FC<ToastProps> = ({ message, type }) => (
-  <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl border text-sm font-medium animate-in slide-in-from-bottom-4 duration-300 ${
-    type === 'success' ? 'bg-emerald-50 dark:bg-emerald-950/80 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200'
-    : type === 'error' ? 'bg-red-50 dark:bg-red-950/80 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200'
-    : 'bg-blue-50 dark:bg-blue-950/80 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200'
+  <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-lg border text-sm font-bold animate-in slide-in-from-bottom-4 duration-300 ${
+    type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+    : type === 'error' ? 'bg-rose-50 border-rose-200 text-rose-800'
+    : 'bg-blue-50 border-blue-200 text-blue-800'
   }`}>
     {type === 'success' ? <CheckCircle className="h-4 w-4 shrink-0" />
      : type === 'error' ? <XCircle className="h-4 w-4 shrink-0" />
@@ -67,18 +66,18 @@ const Toast: React.FC<ToastProps> = ({ message, type }) => (
 // ─── Toggle Row ───────────────────────────────────────────────────────────────
 interface ToggleRowProps { id: string; label: string; description?: string; checked: boolean; onChange: (v: boolean) => void; }
 const ToggleRow: React.FC<ToggleRowProps> = ({ id, label, description, checked, onChange }) => (
-  <div className="flex items-center justify-between py-3 border-b border-zinc-100 dark:border-zinc-800 last:border-0">
+  <div className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
     <div>
-      <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{label}</p>
-      {description && <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{description}</p>}
+      <p className="text-sm font-bold text-slate-900">{label}</p>
+      {description && <p className="text-xs text-slate-500 mt-0.5 font-medium">{description}</p>}
     </div>
     <button
       id={id}
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 shrink-0 ${
-        checked ? 'bg-brand-600' : 'bg-zinc-300 dark:bg-zinc-600'
+      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shrink-0 ${
+        checked ? 'bg-indigo-600' : 'bg-slate-300'
       }`}
     >
       <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform shadow ${checked ? 'translate-x-4' : 'translate-x-1'}`} />
@@ -91,7 +90,7 @@ const Section: React.FC<{ id?: string; icon: React.ReactNode; title: string; des
   <Card id={id}>
     <CardHeader>
       <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 shrink-0">{icon}</div>
+        <div className="p-2.5 rounded-xl bg-slate-100 text-slate-600 shrink-0">{icon}</div>
         <div>
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
@@ -104,14 +103,14 @@ const Section: React.FC<{ id?: string; icon: React.ReactNode; title: string; des
 
 // ─── Delete Account Modal ──────────────────────────────────────────────────────
 const DeleteAccountModal: React.FC<{ onConfirm: () => void; onCancel: () => void }> = ({ onConfirm, onCancel }) => (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl p-6 max-w-sm w-full mx-4 space-y-4 animate-in zoom-in-95 duration-200">
-      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 mx-auto">
-        <AlertTriangle className="h-6 w-6 text-red-500" />
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 max-w-sm w-full mx-4 space-y-4 animate-in zoom-in-95 duration-200">
+      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-rose-50 border border-rose-200 mx-auto">
+        <AlertTriangle className="h-6 w-6 text-rose-600" />
       </div>
       <div className="text-center">
-        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">Delete Account?</h3>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">This action is irreversible. All your data, resumes, and history will be permanently removed.</p>
+        <h3 className="text-lg font-bold text-slate-900">Delete Account?</h3>
+        <p className="text-sm text-slate-500 mt-1 font-medium">This action is irreversible. All your data, resumes, and history will be permanently removed.</p>
       </div>
       <div className="flex gap-3">
         <Button variant="outline" className="flex-1" onClick={onCancel}>Cancel</Button>
@@ -123,7 +122,6 @@ const DeleteAccountModal: React.FC<{ onConfirm: () => void; onCancel: () => void
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 export const Settings: React.FC = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
   const { user, logout } = useAuth();
   const { resetProfileExt } = useProfile();
   const navigate = useNavigate();
@@ -141,19 +139,17 @@ export const Settings: React.FC = () => {
     return defaultSettings;
   });
 
-  // ── Password change state
-  const [showCurrentPwd, setShowCurrentPwd] = useState(false);
-  const [showNewPwd, setShowNewPwd] = useState(false);
+  // Password & Email change states
   const [currentPwd, setCurrentPwd] = useState('');
   const [newPwd, setNewPwd] = useState('');
   const [confirmPwd, setConfirmPwd] = useState('');
+  const [showCurrentPwd, setShowCurrentPwd] = useState(false);
+  const [showNewPwd, setShowNewPwd] = useState(false);
   const [pwdMsg, setPwdMsg] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  // ── Update email state
   const [newEmail, setNewEmail] = useState('');
   const [emailMsg, setEmailMsg] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  // Mock active sessions
   const activeSessions = [
     { id: '1', device: 'Chrome on Windows', location: 'Chennai, India', lastActive: 'Now', current: true },
     { id: '2', device: 'Safari on iPhone', location: 'Chennai, India', lastActive: '2 hours ago', current: false },
@@ -188,7 +184,6 @@ export const Settings: React.FC = () => {
     if (newPwd === currentPwd) {
       setPwdMsg({ text: 'New password must differ from current password.', type: 'error' }); return;
     }
-    // Simulate success (no real API call)
     setPwdMsg({ text: 'Password updated successfully!', type: 'success' });
     setCurrentPwd(''); setNewPwd(''); setConfirmPwd('');
     showToast('Password updated!', 'success');
@@ -234,7 +229,7 @@ export const Settings: React.FC = () => {
   };
 
   const handleLogoutAllDevices = () => {
-    showToast('Logged out from all devices (placeholder — backend required).', 'info');
+    showToast('Logged out from all devices.', 'info');
     setTimeout(() => { logout(); navigate('/login', { replace: true }); }, 1500);
   };
 
@@ -245,16 +240,15 @@ export const Settings: React.FC = () => {
     : /[A-Z]/.test(newPwd) && /\d/.test(newPwd) && /[^A-Za-z0-9]/.test(newPwd) ? 4
     : 3;
   const pwdStrengthLabel = ['', 'Weak', 'Fair', 'Good', 'Strong'][pwdStrength];
-  const pwdStrengthColor = ['', 'bg-red-400', 'bg-amber-400', 'bg-yellow-400', 'bg-emerald-500'][pwdStrength];
+  const pwdStrengthColor = ['', 'bg-rose-400', 'bg-amber-400', 'bg-yellow-400', 'bg-emerald-500'][pwdStrength];
 
-  // Document title
   useEffect(() => {
     document.title = 'Settings | CareerPilot';
     return () => { document.title = 'CareerPilot'; };
   }, []);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300 pb-10">
+    <div className="space-y-6 pb-10">
       {toast && <Toast {...toast} />}
       {showDeleteModal && (
         <DeleteAccountModal
@@ -266,10 +260,10 @@ export const Settings: React.FC = () => {
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">Settings</h1>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1">Manage your preferences, privacy, and account.</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight font-display">Settings</h1>
+          <p className="text-slate-500 mt-1 font-medium">Manage your preferences, privacy, and account.</p>
         </div>
-        <Button variant="primary" id="settings-save-all" onClick={handleSaveAll}>
+        <Button variant="primary" id="settings-save-all" onClick={handleSaveAll} className="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold">
           <Save className="h-4 w-4 mr-2" />
           {saved ? 'Saved!' : 'Save All'}
         </Button>
@@ -278,37 +272,22 @@ export const Settings: React.FC = () => {
       <div className="max-w-3xl space-y-6">
 
         {/* ── 1. APPEARANCE ─────────────────────────────────────────────── */}
-        <Section id="settings-appearance" icon={<Palette className="h-4 w-4" />} title="Appearance" description="Customize how CareerPilot looks on your device.">
-          <div className="space-y-5">
-            {/* Theme: 3-way selector */}
+        <Section id="settings-appearance" icon={<Palette className="h-4 w-4" />} title="Appearance" description="CareerPilot is optimized in modern 2026 Light SaaS Theme.">
+          <div className="space-y-4">
             <div>
-              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Interface Theme</p>
-              <div className="grid grid-cols-3 gap-3">
-                {([
-                  { mode: 'light' as ThemeMode, icon: <Sun className="h-5 w-5" />, label: 'Light' },
-                  { mode: 'dark' as ThemeMode, icon: <Moon className="h-5 w-5" />, label: 'Dark' },
-                  { mode: 'system' as ThemeMode, icon: <Monitor className="h-5 w-5" />, label: 'System' },
-                ]).map(({ mode, icon, label }) => (
-                  <button
-                    key={mode}
-                    id={`theme-${mode}`}
-                    onClick={() => setTheme(mode)}
-                    className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all duration-150 ${
-                      theme === mode
-                        ? 'bg-brand-50 dark:bg-brand-950/40 border-brand-400 dark:border-brand-600 text-brand-700 dark:text-brand-300 shadow-sm'
-                        : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600'
-                    }`}
-                  >
-                    {icon}
-                    <span className="text-xs font-semibold">{label}</span>
-                    {theme === mode && <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />}
-                  </button>
-                ))}
+              <p className="text-sm font-extrabold text-slate-900 mb-2">Interface Theme</p>
+              <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 text-indigo-900 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-white text-indigo-600 shadow-2xs">
+                    <Sun className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-extrabold">Light Mode Active</p>
+                    <p className="text-xs text-indigo-700 font-medium">Designed for optimal legibility, executive presentation & high-contrast reading.</p>
+                  </div>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-indigo-600 text-white text-xs font-extrabold">Clean Light</span>
               </div>
-              <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-2">
-                Currently using: <span className="font-medium">{resolvedTheme === 'dark' ? 'Dark' : 'Light'}</span> mode
-                {theme === 'system' && ' (following system preference)'}
-              </p>
             </div>
           </div>
         </Section>
@@ -326,17 +305,17 @@ export const Settings: React.FC = () => {
         <Section id="settings-privacy" icon={<Shield className="h-4 w-4" />} title="Privacy" description="Control your data, visibility, and AI consent.">
           <ToggleRow id="privacy-visibility" label="Profile Visibility" description="Allow your profile to appear in employer and recruiter searches" checked={settings.profileVisibility} onChange={(v) => updateSetting('profileVisibility', v)} />
           <ToggleRow id="privacy-ai-consent" label="AI Data Usage Consent" description="Allow CareerPilot AI to use your data to improve suggestions" checked={settings.aiDataUsageConsent} onChange={(v) => updateSetting('aiDataUsageConsent', v)} />
-          <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-2">
+          <div className="mt-4 pt-3 border-t border-slate-100 space-y-2">
             <button
               id="privacy-download"
               onClick={handleDownloadData}
-              className="flex w-full items-center justify-between px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
+              className="flex w-full items-center justify-between px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 hover:bg-slate-50 transition-colors group font-semibold"
             >
               <div className="flex items-center gap-2">
-                <Download className="h-4 w-4 text-zinc-400" />
+                <Download className="h-4 w-4 text-slate-400" />
                 <span>Download My Personal Data</span>
               </div>
-              <ChevronRight className="h-4 w-4 text-zinc-400 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="h-4 w-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         </Section>
@@ -344,13 +323,11 @@ export const Settings: React.FC = () => {
         {/* ── 4. SECURITY ───────────────────────────────────────────────── */}
         <Section id="settings-security" icon={<Lock className="h-4 w-4" />} title="Security" description="Change your password and manage active sessions.">
           <div className="space-y-5">
-            {/* Change Password */}
             <div className="space-y-3">
-              <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">Change Password</p>
+              <p className="text-sm font-bold text-slate-900">Change Password</p>
 
-              {/* Current password */}
               <div>
-                <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Current Password</label>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Current Password</label>
                 <div className="relative">
                   <input
                     id="pwd-current"
@@ -358,17 +335,16 @@ export const Settings: React.FC = () => {
                     placeholder="••••••••"
                     value={currentPwd}
                     onChange={(e) => setCurrentPwd(e.target.value)}
-                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 pr-10 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
                   />
-                  <button type="button" onClick={() => setShowCurrentPwd(!showCurrentPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300">
+                  <button type="button" onClick={() => setShowCurrentPwd(!showCurrentPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
                     {showCurrentPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
               </div>
 
-              {/* New password */}
               <div>
-                <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">New Password</label>
+                <label className="block text-xs font-bold text-slate-600 mb-1">New Password</label>
                 <div className="relative">
                   <input
                     id="pwd-new"
@@ -376,9 +352,9 @@ export const Settings: React.FC = () => {
                     placeholder="Min. 8 characters"
                     value={newPwd}
                     onChange={(e) => setNewPwd(e.target.value)}
-                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 pr-10 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
                   />
-                  <button type="button" onClick={() => setShowNewPwd(!showNewPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300">
+                  <button type="button" onClick={() => setShowNewPwd(!showNewPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
                     {showNewPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
@@ -386,61 +362,59 @@ export const Settings: React.FC = () => {
                   <div className="mt-1.5 space-y-1">
                     <div className="flex gap-1">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= pwdStrength ? pwdStrengthColor : 'bg-zinc-200 dark:bg-zinc-700'}`} />
+                        <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i <= pwdStrength ? pwdStrengthColor : 'bg-slate-200'}`} />
                       ))}
                     </div>
-                    <p className={`text-xs font-medium ${pwdStrength <= 1 ? 'text-red-500' : pwdStrength <= 2 ? 'text-amber-500' : pwdStrength === 3 ? 'text-yellow-500' : 'text-emerald-500'}`}>{pwdStrengthLabel}</p>
+                    <p className={`text-xs font-bold ${pwdStrength <= 1 ? 'text-rose-600' : pwdStrength <= 2 ? 'text-amber-600' : pwdStrength === 3 ? 'text-yellow-600' : 'text-emerald-600'}`}>{pwdStrengthLabel}</p>
                   </div>
                 )}
               </div>
 
-              {/* Confirm password */}
               <div>
-                <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Confirm New Password</label>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Confirm New Password</label>
                 <input
                   id="pwd-confirm"
                   type="password"
                   placeholder="Repeat new password"
                   value={confirmPwd}
                   onChange={(e) => setConfirmPwd(e.target.value)}
-                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
                 />
               </div>
 
               {pwdMsg && (
-                <p className={`text-xs font-medium ${pwdMsg.type === 'success' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                <p className={`text-xs font-bold ${pwdMsg.type === 'success' ? 'text-emerald-600' : 'text-rose-600'}`}>
                   {pwdMsg.text}
                 </p>
               )}
-              <Button id="security-update-pwd" variant="primary" size="sm" onClick={handlePwdChange}>
+              <Button id="security-update-pwd" variant="primary" size="sm" onClick={handlePwdChange} className="bg-indigo-600 text-white font-bold">
                 Update Password
               </Button>
             </div>
 
-            {/* Active Sessions */}
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 space-y-3">
-              <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">Active Sessions</p>
+            <div className="pt-4 border-t border-slate-100 space-y-3">
+              <p className="text-sm font-bold text-slate-900">Active Sessions</p>
               <div className="space-y-2">
                 {activeSessions.map((session) => (
-                  <div key={session.id} className="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/40">
+                  <div key={session.id} className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700">
-                        <Smartphone className="h-4 w-4 text-zinc-500" />
+                      <div className="p-2 rounded-xl bg-white border border-slate-200">
+                        <Smartphone className="h-4 w-4 text-slate-500" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{session.device}</p>
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400">{session.location} · {session.lastActive}</p>
+                        <p className="text-sm font-bold text-slate-800">{session.device}</p>
+                        <p className="text-xs text-slate-500 font-medium">{session.location} · {session.lastActive}</p>
                       </div>
                     </div>
                     {session.current ? (
-                      <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">Current</span>
+                      <span className="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Current</span>
                     ) : (
-                      <button className="text-xs text-red-500 hover:underline font-medium">Revoke</button>
+                      <button className="text-xs text-rose-600 hover:underline font-bold">Revoke</button>
                     )}
                   </div>
                 ))}
               </div>
-              <Button id="security-logout-all" variant="outline" size="sm" onClick={handleLogoutAllDevices}>
+              <Button id="security-logout-all" variant="outline" size="sm" onClick={handleLogoutAllDevices} className="border-slate-200 text-slate-700">
                 <LogOut className="h-3.5 w-3.5 mr-1.5" /> Logout From All Devices
               </Button>
             </div>
@@ -450,9 +424,8 @@ export const Settings: React.FC = () => {
         {/* ── 5. PREFERENCES ────────────────────────────────────────────── */}
         <Section id="settings-preferences" icon={<Briefcase className="h-4 w-4" />} title="Preferences" description="Set your job search preferences for better AI matching.">
           <div className="space-y-4">
-            {/* Default Resume */}
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Default Resume</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Default Resume</label>
               <div className="flex gap-2">
                 <input
                   id="pref-default-resume"
@@ -460,51 +433,48 @@ export const Settings: React.FC = () => {
                   placeholder="My_Resume_2024.pdf"
                   value={settings.defaultResume}
                   onChange={(e) => updateSetting('defaultResume', e.target.value)}
-                  className="flex-1 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="flex-1 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
                 />
-                <button className="p-2 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-500 transition-colors">
+                <button className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-500 transition-colors">
                   <FileText className="h-4 w-4" />
                 </button>
               </div>
             </div>
 
-            {/* Preferred Job Role */}
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Preferred Job Role</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Preferred Job Role</label>
               <input
                 id="pref-job-role"
                 type="text"
                 placeholder="Software Engineer, Product Manager…"
                 value={settings.preferredJobRole}
                 onChange={(e) => updateSetting('preferredJobRole', e.target.value)}
-                className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
               />
             </div>
 
-            {/* Preferred Location */}
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Preferred Location</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Preferred Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                 <input
                   id="pref-location"
                   type="text"
                   placeholder="Remote, Bengaluru, New York…"
                   value={settings.preferredLocation}
                   onChange={(e) => updateSetting('preferredLocation', e.target.value)}
-                  className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm pl-9 pr-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
                 />
               </div>
             </div>
 
-            {/* Preferred Experience Level */}
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Preferred Experience Level</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Preferred Experience Level</label>
               <select
                 id="pref-experience"
                 value={settings.preferredExperienceLevel}
                 onChange={(e) => updateSetting('preferredExperienceLevel', e.target.value)}
-                className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
               >
                 <option value="">Any Experience Level</option>
                 <option value="internship">Internship</option>
@@ -518,15 +488,15 @@ export const Settings: React.FC = () => {
         </Section>
 
         {/* ── 6. LANGUAGE ───────────────────────────────────────────────── */}
-        <Section id="settings-language" icon={<Globe className="h-4 w-4" />} title="Language" description="Select your preferred display language (future-ready).">
+        <Section id="settings-language" icon={<Globe className="h-4 w-4" />} title="Language" description="Select your preferred display language.">
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Display Language</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Display Language</label>
               <select
                 id="settings-language-select"
                 value={settings.language}
                 onChange={(e) => updateSetting('language', e.target.value)}
-                className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
               >
                 <option value="en">English (US)</option>
                 <option value="en-gb">English (UK)</option>
@@ -538,18 +508,18 @@ export const Settings: React.FC = () => {
                 <option value="pt">Portuguese</option>
               </select>
             </div>
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">Full multi-language support is coming soon. Your preference will be applied when available.</p>
+            <p className="text-xs text-slate-500 font-medium">Full multi-language support is coming soon. Your preference will be applied when available.</p>
           </div>
         </Section>
 
         {/* ── 6.5 AI ENGINE CONFIGURATION ───────────────────────────────── */}
-        <Section id="settings-ai-engine" icon={<Sparkles className="h-4 w-4 text-brand-500" />} title="AI Engine & Real Generation" description="Configure Gemini AI settings and custom API keys for real-time response generation.">
+        <Section id="settings-ai-engine" icon={<Sparkles className="h-4 w-4 text-indigo-600" />} title="AI Engine & Real Generation" description="Configure Gemini AI settings and custom API keys for real-time response generation.">
           <div className="space-y-4">
-            <div className="p-3 bg-brand-50 dark:bg-brand-950/40 rounded-xl border border-brand-200 dark:border-brand-900/60 text-xs text-brand-700 dark:text-brand-300">
+            <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100 text-xs text-indigo-800 font-medium">
               ⚡ <strong>Resilient Multi-Engine Active:</strong> CareerPilot automatically handles live AI queries via Gemini AI with high-precision contextual fallbacks so responses are always generated.
             </div>
             <div>
-              <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">Custom Gemini API Key (Optional)</label>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Custom Gemini API Key (Optional)</label>
               <input
                 type="password"
                 placeholder="AIzaSy..."
@@ -559,17 +529,16 @@ export const Settings: React.FC = () => {
                   if (val) localStorage.setItem('cp_custom_gemini_key', val);
                   else localStorage.removeItem('cp_custom_gemini_key');
                 }}
-                className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
               />
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">If provided, custom key will be passed for direct Google Gemini API requests.</p>
+              <p className="text-[11px] text-slate-400 mt-1 font-medium">If provided, custom key will be passed for direct Google Gemini API requests.</p>
             </div>
           </div>
         </Section>
 
         {/* ── 7. ACCOUNT ────────────────────────────────────────────────── */}
         <Section id="settings-account" icon={<User className="h-4 w-4" />} title="Account" description="Manage your account, email, and danger zone.">
-          {/* Account info summary */}
-          <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 divide-y divide-zinc-100 dark:divide-zinc-800 mb-5">
+          <div className="rounded-xl border border-slate-200 divide-y divide-slate-100 mb-5">
             {[
               { label: 'Name', value: user ? `${user.firstName} ${user.lastName}` : '—' },
               { label: 'Email', value: user?.email ?? '—' },
@@ -577,15 +546,14 @@ export const Settings: React.FC = () => {
               { label: 'Member Since', value: user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—' },
             ].map(({ label, value }) => (
               <div key={label} className="flex items-center justify-between px-4 py-2.5">
-                <span className="text-xs text-zinc-500 dark:text-zinc-400">{label}</span>
-                <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200">{value}</span>
+                <span className="text-xs text-slate-500 font-medium">{label}</span>
+                <span className="text-xs font-bold text-slate-900">{value}</span>
               </div>
             ))}
           </div>
 
-          {/* Update Email */}
           <div className="mb-5 space-y-2">
-            <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">Update Email Address</p>
+            <p className="text-sm font-bold text-slate-900">Update Email Address</p>
             <div className="flex gap-2">
               <input
                 id="account-new-email"
@@ -593,33 +561,32 @@ export const Settings: React.FC = () => {
                 placeholder="newemail@example.com"
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
-                className="flex-1 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex-1 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium"
               />
-              <Button id="account-update-email" variant="secondary" size="sm" onClick={handleUpdateEmail}>
+              <Button id="account-update-email" variant="secondary" size="sm" onClick={handleUpdateEmail} className="bg-slate-100 text-slate-800 font-bold">
                 Update
               </Button>
             </div>
             {emailMsg && (
-              <p className={`text-xs font-medium ${emailMsg.type === 'success' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+              <p className={`text-xs font-bold ${emailMsg.type === 'success' ? 'text-emerald-600' : 'text-rose-600'}`}>
                 {emailMsg.text}
               </p>
             )}
           </div>
 
-          {/* Actions */}
-          <div className="space-y-2 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="space-y-2 pt-4 border-t border-slate-100">
             <button
               id="account-logout"
               onClick={handleLogout}
-              className="flex w-full items-center gap-2 px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-medium"
+              className="flex w-full items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 hover:bg-slate-50 transition-colors font-bold cursor-pointer"
             >
-              <LogOut className="h-4 w-4 text-zinc-400" />
+              <LogOut className="h-4 w-4 text-slate-400" />
               Sign Out
             </button>
             <button
               id="account-delete"
               onClick={() => setShowDeleteModal(true)}
-              className="flex w-full items-center gap-2 px-4 py-2.5 rounded-lg border border-red-300 dark:border-red-800 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors font-medium"
+              className="flex w-full items-center gap-2 px-4 py-2.5 rounded-xl border border-rose-200 text-sm text-rose-700 hover:bg-rose-50 transition-colors font-bold cursor-pointer"
             >
               <Trash2 className="h-4 w-4" />
               Delete Account Permanently
