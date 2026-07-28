@@ -3,10 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
-  UploadCloud,
   FileCheck,
   GitCompare,
-  FileText,
   HelpCircle,
   Video,
   MessageSquare,
@@ -17,10 +15,10 @@ import {
   Sparkles,
   Wand2,
   Compass,
-  Link2,
   Award,
   Globe,
-  Pin
+  Pin,
+  Briefcase
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -38,38 +36,41 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
 
   const menuGroups: MenuGroup[] = [
     {
-      category: 'CORE PLATFORM',
+      category: 'OVERVIEW',
       items: [
         { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-        { name: 'Upload Resume', path: '/resumes/upload', icon: UploadCloud },
-        { name: 'AI Resume Builder', path: '/resumes/builder', icon: Wand2 },
+        { name: 'Career Profile', path: '/profile', icon: User },
       ]
     },
     {
-      category: 'OPTIMIZATION & ATS',
+      category: 'CAREER TOOLS',
       items: [
-        { name: 'Resume Analysis', path: '/resumes/analysis', icon: FileCheck },
-        { name: 'JD Matcher', path: '/resumes/jd-match', icon: GitCompare },
-        { name: 'Cover Letter Gen', path: '/cover-letter', icon: FileText },
+        { name: 'Resume Builder', path: '/resumes/builder', icon: Wand2 },
+        { name: 'ATS Analyzer', path: '/resumes/analysis', icon: FileCheck },
+        { name: 'Skill Gap Analyzer', path: '/resumes/jd-match', icon: GitCompare },
+        { name: 'Career Roadmap', path: '/career-path', icon: Compass },
       ]
     },
     {
-      category: 'INTERVIEWS & SERVICES',
+      category: 'JOB PREPARATION',
       items: [
-        { name: 'Interview Qs', path: '/interview/questions', icon: HelpCircle },
-        { name: 'Mock Interview', path: '/interview/mock', icon: Video },
-        { name: 'LinkedIn Enhancer', path: '/services/linkedin', icon: Link2 },
-        { name: 'Courses & Certs', path: '/services/courses', icon: Award },
-        { name: 'Global Careers', path: '/services/global-careers', icon: Globe },
+        { name: 'Job Recommendations', path: '/services/global-careers', icon: Globe },
+        { name: 'Job Tracker', path: '/job-tracker', icon: Briefcase },
+        { name: 'Interview Preparation', path: '/interview/questions', icon: HelpCircle },
+        { name: 'Mock Interviews', path: '/interview/mock', icon: Video },
       ]
     },
     {
-      category: 'CAREER STRATEGY',
+      category: 'AI TOOLS & LEARNING',
       items: [
-        { name: 'Career & Salary', path: '/career-path', icon: Compass },
-        { name: 'AI Career Chat', path: '/chat', icon: MessageSquare },
-        { name: 'Profile', path: '/profile', icon: User },
-        { name: 'Settings', path: '/settings', icon: Settings },
+        { name: 'AI Career Assistant', path: '/chat', icon: MessageSquare },
+        { name: 'Learning & Projects', path: '/services/courses', icon: Award },
+      ]
+    },
+    {
+      category: 'ACCOUNT',
+      items: [
+        { name: 'Settings & Security', path: '/settings', icon: Settings },
       ]
     }
   ];
@@ -116,7 +117,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
                 e.stopPropagation();
                 setIsCollapsed(!isCollapsed);
               }}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
               title={isCollapsed ? 'Pin Sidebar' : 'Unpin Sidebar'}
             >
               <Pin className={`h-4 w-4 transition-transform ${isCollapsed ? 'rotate-45 text-slate-400' : 'text-indigo-600'}`} />
@@ -188,7 +189,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all ml-auto bg-white shadow-xs"
+          className="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all ml-auto bg-white shadow-xs cursor-pointer"
         >
           {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>

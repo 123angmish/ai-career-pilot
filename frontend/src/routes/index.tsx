@@ -23,6 +23,7 @@ import ServicesHub from '../pages/ServicesHub';
 import LinkedInEnhancer from '../pages/LinkedInEnhancer';
 import CoursesCertification from '../pages/CoursesCertification';
 import GlobalCareers from '../pages/GlobalCareers';
+import JobTrackerPage from '../pages/JobTrackerPage';
 import Error404 from '../pages/Error404';
 
 export const router = createBrowserRouter([
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
           {
             path: 'cover-letter',
             element: <CoverLetter />,
+          },
+          {
+            path: 'job-tracker',
+            element: <JobTrackerPage />,
           },
           {
             path: 'interview/questions',
