@@ -19,6 +19,7 @@ import com.careerpilot.repository.SavedJobRepository;
 import com.careerpilot.repository.UserRepository;
 import com.careerpilot.security.JwtService;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class UserService {
 
@@ -44,7 +45,7 @@ public class UserService {
 
         // Check whether email already exists
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Email already exists. Please sign in.");
         }
 
         // Convert DTO to Entity
@@ -74,11 +75,11 @@ public class UserService {
 
         // Find user by email
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid Email"));
+                .orElseThrow(() -> new RuntimeException("Account not found. Please create an account first, then sign in."));
 
         // Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid Password");
+            throw new RuntimeException("Incorrect password. Please try again.");
         }
 
         String token = jwtService.generateToken(user.getEmail());
@@ -88,8 +89,8 @@ public class UserService {
                 user.getEmail(),
                 user.getFullName()
         );
-      
     }
+
     public ProfileResponse getCurrentUser(String email) {
 
         User user = userRepository.findByEmail(email)
@@ -103,6 +104,7 @@ public class UserService {
                 user.getRole()
         );
     }
+
     public ProfileResponse updateProfile(UpdateProfileRequest request, String email) {
 
         User user = userRepository.findByEmail(email)
@@ -122,6 +124,7 @@ public class UserService {
                 updatedUser.getRole()
         );
     }
+
     public String changePassword(ChangePasswordRequest request, String email) {
 
         User user = userRepository.findByEmail(email)
@@ -138,6 +141,7 @@ public class UserService {
 
         return "Password changed successfully";
     }
+
     @Transactional
     public String deleteAccount(String email) {
 

@@ -8,11 +8,13 @@ export function extractAuthError(err: unknown): string {
   if (axios.isAxiosError(err)) {
     const data = err.response?.data as ApiError | undefined;
     if (data?.message) return data.message;
-    if (err.response?.status === 401) return 'Invalid email or password.';
-    if (err.response?.status === 409) return 'An account with this email already exists.';
-    if (err.response?.status === 400) return 'Please check your input and try again.';
+    if (err.response?.status === 401 || err.response?.status === 404 || err.response?.status === 500) {
+      return 'Account not found. Please create an account first, then sign in.';
+    }
+    if (err.response?.status === 409) return 'An account with this email already exists. Please sign in.';
+    if (err.response?.status === 400) return 'Please check your input details and try again.';
   }
-  return 'Something went wrong. Please try again.';
+  return 'Account not found. Please create an account first, then sign in.';
 }
 
 export const authService = {
@@ -86,4 +88,3 @@ export const authService = {
     localStorage.removeItem('cp_user');
   },
 };
-
