@@ -16,7 +16,8 @@ import {
   CheckCircle, 
   Video, 
   Map, 
-  ArrowRight 
+  ArrowRight,
+  UserCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -166,31 +167,30 @@ export const PublicNavbar: React.FC = () => {
           </div>
         </nav>
 
-        {/* Right: Auth Action Buttons */}
+        {/* Right: Auth Action Buttons (ALWAYS shows Login & Sign Up) */}
         <div className="hidden md:flex items-center gap-3">
-          {isAuthenticated ? (
+          {isAuthenticated && (
             <Link
               to="/dashboard"
-              className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-full text-xs shadow-md shadow-indigo-500/20 transition-all hover:scale-105"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-full text-xs transition-colors border border-indigo-100 mr-1"
             >
-              Go to Dashboard <ArrowRight className="h-4 w-4" />
+              <UserCheck className="h-3.5 w-3.5 text-indigo-600" /> Dashboard
             </Link>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="px-4 py-2 text-xs font-bold text-slate-700 hover:text-indigo-600 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-full text-xs shadow-md shadow-indigo-500/20 transition-all hover:scale-105"
-              >
-                Get Started Free <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </>
           )}
+
+          <Link
+            to="/login"
+            className="px-4 py-2 text-xs font-extrabold text-slate-700 hover:text-indigo-600 transition-colors"
+          >
+            Log In
+          </Link>
+
+          <Link
+            to="/register"
+            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-full text-xs shadow-md shadow-indigo-500/20 transition-all hover:scale-105"
+          >
+            Sign Up <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
 
         {/* Mobile Hamburger Toggle */}
@@ -219,32 +219,29 @@ export const PublicNavbar: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5">
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-3 bg-indigo-600 text-white font-extrabold rounded-xl text-xs shadow-md"
+                  className="w-full text-center py-2.5 bg-indigo-50 border border-indigo-100 text-indigo-700 font-extrabold rounded-xl text-xs"
                 >
                   Go to Dashboard
                 </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-800"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center py-3 bg-indigo-600 text-white font-extrabold rounded-xl text-xs shadow-md"
-                  >
-                    Get Started Free
-                  </Link>
-                </>
               )}
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-800"
+              >
+                Log In
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-3 bg-indigo-600 text-white font-extrabold rounded-xl text-xs shadow-md"
+              >
+                Sign Up
+              </Link>
             </div>
           </motion.div>
         )}
