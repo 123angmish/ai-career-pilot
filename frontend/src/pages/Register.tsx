@@ -10,7 +10,6 @@ import { PasswordInput } from '../components/auth/PasswordInput';
 import { PasswordStrengthMeter } from '../components/auth/PasswordStrengthMeter';
 import { authService, extractAuthError } from '../services/auth.service';
 
-// ─── Form shape ────────────────────────────────────────────────────────────────
 interface RegisterFormValues {
   firstName: string;
   lastName: string;
@@ -20,7 +19,6 @@ interface RegisterFormValues {
   phoneNumber: string;
 }
 
-// ─── Component ─────────────────────────────────────────────────────────────────
 export const Register: React.FC = () => {
   const navigate = useNavigate();
   const [registered, setRegistered] = useState(false);
@@ -59,7 +57,6 @@ export const Register: React.FC = () => {
         phoneNumber: values.phoneNumber,
       }),
     onSuccess: () => {
-      // ✔ Do NOT auto-login. Show success message, then redirect to Login.
       setRegistered(true);
       setTimeout(() => {
         navigate('/login', { replace: true });
@@ -74,16 +71,15 @@ export const Register: React.FC = () => {
     registerMutation.mutate(values);
   };
 
-  // ── Success state ────────────────────────────────────────────────────────────
   if (registered) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 space-y-4 animate-in fade-in duration-300">
-        <div className="flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+      <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center py-10 space-y-4 animate-in fade-in duration-300 select-none">
+        <div className="flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 border border-emerald-200">
+          <CheckCircle2 className="h-8 w-8 text-emerald-600" />
         </div>
         <div className="text-center">
-          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Account created!</h2>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          <h2 className="text-xl font-extrabold text-slate-900 font-display">Account created!</h2>
+          <p className="text-sm text-slate-500 mt-1 font-medium">
             Redirecting you to sign in…
           </p>
         </div>
@@ -91,29 +87,28 @@ export const Register: React.FC = () => {
     );
   }
 
-  // ── Form ─────────────────────────────────────────────────────────────────────
   return (
-    <div className="space-y-7 select-none">
+    <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6 select-none">
       {/* Header */}
       <div className="space-y-1">
         {/* Mobile-only brand mark */}
         <div className="flex lg:hidden items-center gap-2 mb-6">
-          <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-brand-600 text-white shrink-0">
-            <Sparkles className="h-4 w-4" />
+          <div className="flex items-center justify-center h-9 w-9 rounded-2xl bg-indigo-600 text-white shrink-0 shadow-sm">
+            <Sparkles className="h-5 w-5" />
           </div>
-          <span className="font-bold text-zinc-900 dark:text-zinc-50 text-lg tracking-tight">
+          <span className="font-extrabold text-slate-900 text-lg tracking-tight font-display">
             CareerPilot
           </span>
         </div>
 
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight font-display">
           Create your account
         </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="text-sm text-slate-500 font-medium">
           Already have a profile?{' '}
           <Link
             to="/login"
-            className="font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 transition-colors"
+            className="font-bold text-indigo-600 hover:text-indigo-700 transition-colors"
           >
             Sign in
           </Link>
@@ -124,9 +119,9 @@ export const Register: React.FC = () => {
       {errors.root && (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/40 px-3.5 py-3 text-sm text-red-700 dark:text-red-400 animate-in fade-in duration-150"
+          className="flex items-start gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 px-3.5 py-3 text-xs font-bold text-rose-800 animate-in fade-in duration-150"
         >
-          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
           <span>{errors.root.message}</span>
         </div>
       )}
@@ -234,18 +229,18 @@ export const Register: React.FC = () => {
         </div>
 
         {/* Terms */}
-        <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+        <p className="text-xs text-slate-500 leading-relaxed font-medium">
           By creating an account, you agree to our{' '}
           <a
             href="#"
-            className="font-medium text-zinc-700 dark:text-zinc-300 hover:underline underline-offset-2"
+            className="font-bold text-slate-700 hover:underline underline-offset-2"
           >
             Terms of Service
           </a>{' '}
           and{' '}
           <a
             href="#"
-            className="font-medium text-zinc-700 dark:text-zinc-300 hover:underline underline-offset-2"
+            className="font-bold text-slate-700 hover:underline underline-offset-2"
           >
             Privacy Policy
           </a>
@@ -256,7 +251,7 @@ export const Register: React.FC = () => {
         <Button
           type="submit"
           id="register-submit"
-          className="w-full py-2.5 group"
+          className="w-full py-3 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs"
           isLoading={registerMutation.isPending}
         >
           Create account

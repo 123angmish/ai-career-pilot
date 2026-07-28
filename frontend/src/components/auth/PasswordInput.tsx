@@ -17,7 +17,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+            className="block text-xs font-bold text-slate-700 mb-1"
           >
             {label}
           </label>
@@ -27,22 +27,19 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
             id={inputId}
             ref={ref}
             type={visible ? 'text' : 'password'}
-            className={`block w-full rounded-md border text-sm py-2 pl-3 pr-10 transition-colors
-              bg-white dark:bg-zinc-900
-              text-zinc-900 dark:text-zinc-100
-              placeholder-zinc-400 dark:placeholder-zinc-500
-              focus:outline-none focus:ring-1
+            className={`block w-full rounded-xl border text-sm py-2.5 pl-3.5 pr-10 transition-all font-medium
+              bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2
               ${
                 error
-                  ? 'border-red-400 dark:border-red-600 focus:border-red-500 focus:ring-red-500'
-                  : 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 focus:border-brand-500 focus:ring-brand-500'
+                  ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500'
+                  : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-indigo-500'
               } ${className}`}
             {...props}
           />
           <button
             type="button"
             onClick={() => setVisible((v) => !v)}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
             tabIndex={-1}
             aria-label={visible ? 'Hide password' : 'Show password'}
           >
@@ -54,12 +51,12 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
           </button>
         </div>
         {error && (
-          <p className="mt-1 text-xs text-red-600 dark:text-red-400" role="alert">
+          <p className="mt-1 text-xs font-bold text-rose-600" role="alert">
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{helperText}</p>
+          <p className="mt-1 text-xs text-slate-500 font-medium">{helperText}</p>
         )}
       </div>
     );

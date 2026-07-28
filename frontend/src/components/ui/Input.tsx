@@ -15,31 +15,31 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+            className="block text-xs font-bold text-slate-700 mb-1"
           >
             {label}
           </label>
         )}
-        <div className="relative rounded-md shadow-sm">
+        <div className="relative rounded-xl shadow-2xs">
           <input
             id={inputId}
             ref={ref}
             type={type}
-            className={`block w-full rounded-md border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2 px-3 focus:outline-none focus:ring-1 border transition-colors ${
+            className={`block w-full rounded-xl border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2.5 px-3.5 focus:outline-none focus:ring-2 border transition-all font-medium ${
               error
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600'
+                ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500'
+                : 'border-slate-200 hover:border-slate-300'
             } ${className}`}
             {...props}
           />
         </div>
         {error && (
-          <p className="mt-1 text-xs text-red-600 dark:text-red-400" id={`${inputId}-error`}>
+          <p className="mt-1 text-xs font-bold text-rose-600" id={`${inputId}-error`}>
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+          <p className="mt-1 text-xs text-slate-500 font-medium">
             {helperText}
           </p>
         )}
