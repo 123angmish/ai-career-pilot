@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  // If running on production domain (e.g., vercel.app or any external phone), force live Render URL
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://ai-career-pilot-backend.onrender.com';
+  }
+  return envUrl || 'https://ai-career-pilot-backend.onrender.com';
+};
+
 const api = axios.create({
-  baseURL: (import.meta.env.VITE_API_URL as string) || 'https://ai-career-pilot-backend.onrender.com',
+  baseURL: getBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
@@ -38,15 +47,13 @@ api.interceptors.response.use(
   (error) => {
     if (error.response) {
       if (error.response.status === 401) {
-        // Clear local storage and redirect to login if unauthorized
         localStorage.removeItem('cp_token');
         localStorage.removeItem('cp_user');
-        if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+        if (window.location.pathname !== '/login' && window.location.pathname !== '/register' && window.location.pathname !== '/') {
           window.location.href = '/login';
         }
       }
       
-      // If error payload is not wrapped in ApiError, wrap it
       if (error.response.data && typeof error.response.data === 'object' && !('success' in error.response.data)) {
         error.response.data = {
           success: false,
