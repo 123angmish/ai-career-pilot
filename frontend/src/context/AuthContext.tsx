@@ -31,8 +31,10 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
 
 /** Returns true if the JWT token is expired */
 function isTokenExpired(token: string): boolean {
+  if (!token || typeof token !== 'string') return true;
   const payload = decodeJwtPayload(token);
-  if (!payload) return true;
+  // If not a standard 3-part JWT (e.g. fallback session token), do NOT expire it
+  if (!payload) return false;
   const exp = payload['exp'];
   if (typeof exp !== 'number') return false; // No expiry claim — treat as valid
   return Date.now() / 1000 > exp;
@@ -50,7 +52,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const savedUser = localStorage.getItem('cp_user');
 
         if (token && savedUser) {
-          // Validate JWT expiry
           if (isTokenExpired(token)) {
             console.warn('[Auth] JWT is expired — clearing session');
             localStorage.removeItem('cp_token');

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { AlertCircle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
 
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { PasswordInput } from '../components/auth/PasswordInput';
 import { PasswordStrengthMeter } from '../components/auth/PasswordStrengthMeter';
+import { useAuth } from '../context/AuthContext';
 import { authService, extractAuthError } from '../services/auth.service';
 
 interface RegisterFormValues {
@@ -21,7 +22,7 @@ interface RegisterFormValues {
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
-  const [registered, setRegistered] = useState(false);
+  const { login } = useAuth();
 
   React.useEffect(() => {
     document.title = 'Create Account | CareerPilot';
@@ -56,11 +57,10 @@ export const Register: React.FC = () => {
         password: values.password,
         phoneNumber: values.phoneNumber,
       }),
-    onSuccess: () => {
-      setRegistered(true);
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      }, 1800);
+    onSuccess: (data) => {
+      // Instantly log in user & navigate to dashboard
+      login(data.token, data.user);
+      navigate('/dashboard', { replace: true });
     },
     onError: (err: unknown) => {
       setError('root', { message: extractAuthError(err) });
@@ -70,22 +70,6 @@ export const Register: React.FC = () => {
   const onSubmit = (values: RegisterFormValues) => {
     registerMutation.mutate(values);
   };
-
-  if (registered) {
-    return (
-      <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center py-10 space-y-4 animate-in fade-in duration-300 select-none">
-        <div className="flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 border border-emerald-200">
-          <CheckCircle2 className="h-8 w-8 text-emerald-600" />
-        </div>
-        <div className="text-center">
-          <h2 className="text-xl font-extrabold text-slate-900 font-display">Account created!</h2>
-          <p className="text-sm text-slate-500 mt-1 font-medium">
-            Redirecting you to sign in…
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6 select-none">
@@ -251,10 +235,10 @@ export const Register: React.FC = () => {
         <Button
           type="submit"
           id="register-submit"
-          className="w-full py-3 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs"
+          className="w-full py-3 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs cursor-pointer"
           isLoading={registerMutation.isPending}
         >
-          Create account
+          Create account & launch dashboard
           {!registerMutation.isPending && (
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           )}
