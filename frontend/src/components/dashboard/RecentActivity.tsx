@@ -1,5 +1,6 @@
 import React from 'react';
-import { FileCheck, Video, Link2, Compass, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { FileCheck, Video, Link2, Compass, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { DashboardCard } from './DashboardCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,11 +22,11 @@ export const RecentActivity: React.FC = () => {
   const activities: ActivityItem[] = [
     {
       id: 'linkedin',
-      title: 'LinkedIn Real ID Extracted & Audited',
+      title: 'LinkedIn Profile Audit Completed',
       description: 'Parsed handle @angel-mishra. Recruiter SEO Score: 94/100.',
       timestamp: '10m ago',
       icon: <Link2 className="h-4 w-4" />,
-      iconColorClass: 'text-sky-600 dark:text-sky-400 bg-sky-500/10 border border-sky-500/20',
+      iconColorClass: 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30',
       path: '/services/linkedin'
     },
     {
@@ -34,16 +35,16 @@ export const RecentActivity: React.FC = () => {
       description: 'Senior Principal Engineer panel booked. Live Chat & Meet links generated.',
       timestamp: '1h ago',
       icon: <Video className="h-4 w-4" />,
-      iconColorClass: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 border border-purple-500/20',
+      iconColorClass: 'text-purple-400 bg-purple-500/10 border border-purple-500/30',
       path: '/interview/mock'
     },
     {
       id: 'salary',
       title: 'Career & Salary Scorecard Generated',
-      description: '360° Readiness Score: 88/100 (Top 5% Tier). Tailored counter-offer script created.',
+      description: '360° Readiness Score: 88/100 (Top 5% Tier). Counter-offer script created.',
       timestamp: '3h ago',
       icon: <Compass className="h-4 w-4" />,
-      iconColorClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20',
+      iconColorClass: 'text-amber-400 bg-amber-500/10 border border-amber-500/30',
       path: '/career-path'
     },
     {
@@ -52,43 +53,47 @@ export const RecentActivity: React.FC = () => {
       description: `Parsed ${fileName}. Overall ATS Score: 92/100. 14 key strengths verified.`,
       timestamp: '15h ago',
       icon: <FileCheck className="h-4 w-4" />,
-      iconColorClass: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20',
+      iconColorClass: 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/30',
       path: '/resumes/analysis'
     }
   ];
 
   return (
-    <DashboardCard className="h-full flex flex-col border border-zinc-200/80 dark:border-zinc-800 rounded-3xl shadow-sm">
-      <div className="p-6 space-y-4 flex-1">
+    <DashboardCard className="h-full flex flex-col glass-card rounded-3xl border border-white/10 p-6 relative overflow-hidden">
+      <div className="space-y-4 flex-1">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-black text-zinc-900 dark:text-zinc-50 tracking-tight text-base flex items-center gap-2">
-              Recent Activity <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+            <h3 className="font-extrabold text-white tracking-tight text-base flex items-center gap-2 font-display">
+              Recent Activity <CheckCircle2 className="h-4 w-4 text-emerald-400" />
             </h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold">Your verified live executive progress timeline.</p>
+            <p className="text-xs text-zinc-400 font-medium">Your verified live executive progress stream.</p>
           </div>
         </div>
 
-        <div className="relative pl-6 space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-zinc-200 dark:before:bg-zinc-800 pt-2">
-          {activities.map((act) => (
-            <div
+        <div className="relative pl-6 space-y-5 before:absolute before:left-[11px] before:top-3 before:bottom-3 before:w-0.5 before:bg-white/10 pt-2">
+          {activities.map((act, index) => (
+            <motion.div
               key={act.id}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
               onClick={() => act.path && navigate(act.path)}
-              className="relative flex gap-4 items-start text-sm group cursor-pointer p-2 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-850/60 transition-colors"
+              className="relative flex gap-4 items-start text-sm group cursor-pointer p-3 rounded-2xl bg-white/[0.02] hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
             >
-              <div className={`absolute -left-6 p-2 rounded-xl ${act.iconColorClass} z-10 shadow-sm transition-transform group-hover:scale-110`}>
+              <div className={`absolute -left-6 p-2 rounded-xl ${act.iconColorClass} z-10 shadow-lg shadow-black/40 backdrop-blur-md transition-transform group-hover:scale-110`}>
                 {act.icon}
               </div>
-              <div className="flex-1 space-y-0.5 pl-2">
-                <div className="flex justify-between items-baseline gap-2">
-                  <h4 className="font-extrabold text-zinc-900 dark:text-zinc-100 text-xs group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <div className="flex-1 space-y-1 pl-3">
+                <div className="flex justify-between items-center gap-2">
+                  <h4 className="font-bold text-white text-xs group-hover:text-indigo-300 transition-colors flex items-center gap-1">
                     {act.title}
+                    <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-400" />
                   </h4>
-                  <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 whitespace-nowrap">{act.timestamp}</span>
+                  <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap">{act.timestamp}</span>
                 </div>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">{act.description}</p>
+                <p className="text-xs text-zinc-400 leading-relaxed font-normal">{act.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
