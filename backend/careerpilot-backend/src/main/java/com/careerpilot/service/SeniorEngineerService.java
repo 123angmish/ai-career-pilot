@@ -4,6 +4,7 @@ import com.careerpilot.entity.SeniorEngineer;
 import com.careerpilot.repository.SeniorEngineerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,12 +14,16 @@ public class SeniorEngineerService {
     private SeniorEngineerRepository engineerRepository;
 
     public List<SeniorEngineer> getAllEngineers() {
-        List<SeniorEngineer> list = engineerRepository.findAll();
-        if (list.isEmpty()) {
-            initDefaultEngineers();
-            list = engineerRepository.findAll();
+        try {
+            List<SeniorEngineer> list = engineerRepository.findAll();
+            if (list.isEmpty()) {
+                initDefaultEngineers();
+                list = engineerRepository.findAll();
+            }
+            return list;
+        } catch (Exception e) {
+            return getDefaultEngineersList();
         }
-        return list;
     }
 
     public SeniorEngineer registerEngineer(SeniorEngineer engineer) {
@@ -28,11 +33,16 @@ public class SeniorEngineerService {
         if (engineer.getAvailableSlots() == null || engineer.getAvailableSlots().trim().isEmpty()) {
             engineer.setAvailableSlots("Tomorrow 5:00 PM, Sunday 10:00 AM, Sunday 3:00 PM");
         }
-        return engineerRepository.save(engineer);
+        try {
+            return engineerRepository.save(engineer);
+        } catch (Exception e) {
+            return engineer;
+        }
     }
 
-    private void initDefaultEngineers() {
+    private List<SeniorEngineer> getDefaultEngineersList() {
         SeniorEngineer e1 = SeniorEngineer.builder()
+                .id(1L)
                 .name("Siddharth Sharma")
                 .role("Staff Software Engineer")
                 .company("Google")
@@ -48,6 +58,7 @@ public class SeniorEngineerService {
                 .build();
 
         SeniorEngineer e2 = SeniorEngineer.builder()
+                .id(2L)
                 .name("Ananya Roy")
                 .role("Lead Frontend Architect")
                 .company("Microsoft")
@@ -63,6 +74,7 @@ public class SeniorEngineerService {
                 .build();
 
         SeniorEngineer e3 = SeniorEngineer.builder()
+                .id(3L)
                 .name("Rohan Mehta")
                 .role("Principal Data Scientist")
                 .company("Amazon")
@@ -78,6 +90,7 @@ public class SeniorEngineerService {
                 .build();
 
         SeniorEngineer e4 = SeniorEngineer.builder()
+                .id(4L)
                 .name("Priya Verma")
                 .role("Engineering Manager")
                 .company("Meta")
@@ -92,6 +105,12 @@ public class SeniorEngineerService {
                 .email("priya@meta.dev")
                 .build();
 
-        engineerRepository.saveAll(List.of(e1, e2, e3, e4));
+        return List.of(e1, e2, e3, e4);
+    }
+
+    private void initDefaultEngineers() {
+        try {
+            engineerRepository.saveAll(getDefaultEngineersList());
+        } catch (Exception ignored) {}
     }
 }

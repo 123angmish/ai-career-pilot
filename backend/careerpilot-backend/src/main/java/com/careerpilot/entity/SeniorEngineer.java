@@ -34,8 +34,10 @@ public class SeniorEngineer {
 
     private Integer reviewsCount;
 
+    @Column(name = "feeinr")
     private Double feeINR;
 
+    @Column(name = "feeusd")
     private Double feeUSD;
 
     private String avatarBg;
