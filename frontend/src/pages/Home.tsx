@@ -20,11 +20,8 @@ import {
 } from 'lucide-react';
 import { PublicNavbar } from '../components/PublicNavbar';
 import { Footer } from '../components/Footer';
-import { useAuth } from '../context/AuthContext';
 
 export const Home: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-
   // Changing text rotator phrases
   const rotatingPhrases = [
     'Build ATS-friendly resumes',
@@ -137,16 +134,16 @@ export const Home: React.FC = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
           >
             <Link
-              to={isAuthenticated ? "/dashboard" : "/register"}
-              className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-indigo-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2 group"
+              to="/register"
+              className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-indigo-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2 group cursor-pointer"
             >
-              {isAuthenticated ? "Launch Dashboard" : "Start Placement Prep Free"}
+              Start Placement Prep Free
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <a
               href="#features"
-              className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 font-extrabold text-sm rounded-2xl border border-slate-200 shadow-2xs transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 font-extrabold text-sm rounded-2xl border border-slate-200 shadow-2xs transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               Explore AI Features
             </a>
@@ -191,7 +188,7 @@ export const Home: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
               {/* Card 1: ATS Resume Score */}
-              <div className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-3">
+              <Link to="/resumes/analysis" className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-extrabold uppercase tracking-wider text-indigo-700">ATS Audit Score</span>
                   <Award className="h-4 w-4 text-indigo-600" />
@@ -204,10 +201,10 @@ export const Home: React.FC = () => {
                   <div className="bg-indigo-600 h-full w-[94%]" />
                 </div>
                 <p className="text-xs text-slate-500 font-medium">9 out of 10 FAANG keywords matched cleanly.</p>
-              </div>
+              </Link>
 
               {/* Card 2: Top Job Recommendation */}
-              <div className="p-5 rounded-2xl bg-purple-50/50 border border-purple-100 space-y-3">
+              <Link to="/services/global-careers" className="p-5 rounded-2xl bg-purple-50/50 border border-purple-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-extrabold uppercase tracking-wider text-purple-700">Top Match Job</span>
                   <TrendingUp className="h-4 w-4 text-purple-600" />
@@ -219,10 +216,10 @@ export const Home: React.FC = () => {
                 <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 text-[11px] font-extrabold">
                   <Sparkles className="h-3 w-3" /> 98% Skill Match
                 </div>
-              </div>
+              </Link>
 
               {/* Card 3: Technical Mock Loop */}
-              <div className="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-100 space-y-3">
+              <Link to="/interview/mock" className="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-100 space-y-3 hover:scale-[1.02] transition-transform cursor-pointer block">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-extrabold uppercase tracking-wider text-cyan-700">Mock Interview</span>
                   <Video className="h-4 w-4 text-cyan-600" />
@@ -234,7 +231,7 @@ export const Home: React.FC = () => {
                 <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div className="bg-cyan-500 h-full w-[88%]" />
                 </div>
-              </div>
+              </Link>
 
             </div>
           </div>
@@ -245,19 +242,19 @@ export const Home: React.FC = () => {
       {/* ── 2. TRUSTED METRICS BAR ──────────────────────────────────────────── */}
       <section className="py-12 bg-white border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
+          <div className="p-4 rounded-2xl hover:bg-slate-50 transition-colors">
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-display">45,000+</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Students Placed</p>
           </div>
-          <div>
+          <div className="p-4 rounded-2xl hover:bg-slate-50 transition-colors">
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-display">98.4%</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">ATS Pass Rate</p>
           </div>
-          <div>
+          <div className="p-4 rounded-2xl hover:bg-slate-50 transition-colors">
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-display">₹14.2 LPA</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Avg CTC Package</p>
           </div>
-          <div>
+          <div className="p-4 rounded-2xl hover:bg-slate-50 transition-colors">
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-display">500+</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Hiring Partners</p>
           </div>
@@ -281,7 +278,7 @@ export const Home: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Feature 1 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/resumes/builder" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <FileText className="h-6 w-6" />
             </div>
@@ -289,13 +286,13 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Create professional, single-page A4 resumes styled with recruiter-approved typography and real-time live preview.
             </p>
-            <Link to={isAuthenticated ? "/resumes/builder" : "/login"} className="inline-flex items-center text-xs font-extrabold text-indigo-600 hover:text-indigo-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-indigo-600 hover:text-indigo-700 gap-1">
               Build Resume Now <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
           {/* Feature 2 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/resumes/analysis" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <Zap className="h-6 w-6" />
             </div>
@@ -303,13 +300,13 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Upload your PDF and get instant ATS pass scores, keyword gap audits, and action verb suggestions.
             </p>
-            <Link to={isAuthenticated ? "/resumes/analysis" : "/login"} className="inline-flex items-center text-xs font-extrabold text-purple-600 hover:text-purple-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-purple-600 hover:text-purple-700 gap-1">
               Audit Resume <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
           {/* Feature 3 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/career-path" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <Compass className="h-6 w-6" />
             </div>
@@ -317,13 +314,13 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Generate step-by-step learning roadmaps tailored to SDE, Fullstack, Frontend, Data Science, and DevOps target roles.
             </p>
-            <Link to={isAuthenticated ? "/career-path" : "/login"} className="inline-flex items-center text-xs font-extrabold text-amber-600 hover:text-amber-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-amber-600 hover:text-amber-700 gap-1">
               View Roadmap <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
           {/* Feature 4 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/interview/mock" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <Video className="h-6 w-6" />
             </div>
@@ -331,13 +328,13 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Practice real-time technical interviews with AI analysis on clarity, domain terminology, and problem-solving.
             </p>
-            <Link to={isAuthenticated ? "/interview/mock" : "/login"} className="inline-flex items-center text-xs font-extrabold text-cyan-600 hover:text-cyan-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-cyan-600 hover:text-cyan-700 gap-1">
               Start Mock Interview <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
           {/* Feature 5 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/interview/questions" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <HelpCircle className="h-6 w-6" />
             </div>
@@ -345,13 +342,13 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Curated database of Indian & global tech interview questions with structured AI answer guidance.
             </p>
-            <Link to={isAuthenticated ? "/interview/questions" : "/login"} className="inline-flex items-center text-xs font-extrabold text-rose-600 hover:text-rose-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-rose-600 hover:text-rose-700 gap-1">
               Practice Questions <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
           {/* Feature 6 */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+          <Link to="/chat" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group block cursor-pointer">
             <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
               <Bot className="h-6 w-6" />
             </div>
@@ -359,10 +356,10 @@ export const Home: React.FC = () => {
             <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
               Ask anything about placement prep, salary negotiations, project ideas, and resume summaries in real-time chat.
             </p>
-            <Link to={isAuthenticated ? "/chat" : "/login"} className="inline-flex items-center text-xs font-extrabold text-emerald-600 hover:text-emerald-700 gap-1">
+            <span className="inline-flex items-center text-xs font-extrabold text-emerald-600 hover:text-emerald-700 gap-1">
               Ask AI Assistant <ChevronRight className="h-4 w-4" />
-            </Link>
-          </div>
+            </span>
+          </Link>
 
         </div>
       </section>
@@ -384,16 +381,17 @@ export const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { num: '01', title: 'Upload Profile', desc: 'Import your existing resume or fill in education & target job roles.' },
-              { num: '02', title: 'Run ATS Audit', desc: 'Get real-time feedback on keyword coverage, formatting, and skill gap score.' },
-              { num: '03', title: 'Practice Mocks', desc: 'Answer AI technical questions & receive instant communication feedback.' },
-              { num: '04', title: 'Get Placed', desc: 'Apply with high confidence to matching jobs with tailored cover letters.' },
+              { num: '01', title: 'Upload Profile', desc: 'Import your existing resume or fill in education & target job roles.', path: '/resumes/builder' },
+              { num: '02', title: 'Run ATS Audit', desc: 'Get real-time feedback on keyword coverage, formatting, and skill gap score.', path: '/resumes/analysis' },
+              { num: '03', title: 'Practice Mocks', desc: 'Answer AI technical questions & receive instant communication feedback.', path: '/interview/mock' },
+              { num: '04', title: 'Get Placed', desc: 'Apply with high confidence to matching jobs with tailored cover letters.', path: '/job-tracker' },
             ].map((step, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3 relative">
-                <span className="text-4xl font-extrabold text-indigo-200 font-display">{step.num}</span>
+              <Link key={idx} to={step.path} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs hover:shadow-lg transition-all space-y-3 relative block cursor-pointer group">
+                <span className="text-4xl font-extrabold text-indigo-200 group-hover:text-indigo-600 transition-colors font-display">{step.num}</span>
                 <h4 className="text-lg font-extrabold text-slate-900 font-display">{step.title}</h4>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">{step.desc}</p>
-              </div>
+                <span className="text-xs font-bold text-indigo-600 flex items-center gap-1 pt-1">Try Step <ChevronRight className="h-3.5 w-3.5" /></span>
+              </Link>
             ))}
           </div>
         </div>
@@ -433,7 +431,7 @@ export const Home: React.FC = () => {
               </ul>
             </div>
 
-            <Link to="/register" className="w-full mt-8 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs rounded-xl text-center transition-colors">
+            <Link to="/register" className="w-full mt-8 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs rounded-xl text-center transition-colors cursor-pointer">
               Get Started Free
             </Link>
           </div>
@@ -460,7 +458,7 @@ export const Home: React.FC = () => {
               </ul>
             </div>
 
-            <Link to="/register" className="w-full mt-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs rounded-xl text-center shadow-md shadow-indigo-500/25 transition-all">
+            <Link to="/register" className="w-full mt-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs rounded-xl text-center shadow-md shadow-indigo-500/25 transition-all cursor-pointer">
               Upgrade to Pro
             </Link>
           </div>
@@ -483,7 +481,7 @@ export const Home: React.FC = () => {
               </ul>
             </div>
 
-            <Link to="/register" className="w-full mt-8 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs rounded-xl text-center transition-colors">
+            <Link to="/register" className="w-full mt-8 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs rounded-xl text-center transition-colors cursor-pointer">
               Get Annual Pass
             </Link>
           </div>
@@ -511,7 +509,7 @@ export const Home: React.FC = () => {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-900 text-sm hover:text-indigo-600 transition-colors"
+                  className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-900 text-sm hover:text-indigo-600 transition-colors cursor-pointer"
                 >
                   <span>{faq.q}</span>
                   {openFaq === idx ? <Minus className="h-4 w-4 text-indigo-600" /> : <Plus className="h-4 w-4 text-slate-400" />}
@@ -549,10 +547,10 @@ export const Home: React.FC = () => {
 
           <div className="pt-2">
             <Link
-              to={isAuthenticated ? "/dashboard" : "/register"}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-600 hover:bg-slate-50 font-extrabold text-sm rounded-2xl shadow-xl transition-transform hover:scale-105"
+              to="/register"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-600 hover:bg-slate-50 font-extrabold text-sm rounded-2xl shadow-xl transition-transform hover:scale-105 cursor-pointer"
             >
-              {isAuthenticated ? "Launch Dashboard" : "Create Free Account Now"} <ArrowRight className="h-4 w-4" />
+              Create Free Account Now <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

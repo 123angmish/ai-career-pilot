@@ -16,8 +16,7 @@ import {
   CheckCircle, 
   Video, 
   Map, 
-  ArrowRight,
-  UserCheck
+  ArrowRight
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -101,7 +100,7 @@ export const PublicNavbar: React.FC = () => {
                     <Link
                       key={idx}
                       to={isAuthenticated ? item.path : '/login'}
-                      className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition-colors group cursor-pointer"
                     >
                       <div className={`p-2 rounded-xl bg-slate-100 ${item.color} shrink-0 group-hover:scale-105 transition-transform`}>
                         <item.icon className="h-4 w-4" />
@@ -150,7 +149,7 @@ export const PublicNavbar: React.FC = () => {
                     <Link
                       key={idx}
                       to={isAuthenticated ? item.path : '/login'}
-                      className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition-colors group"
+                      className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-slate-50 transition-colors group cursor-pointer"
                     >
                       <div className={`p-2 rounded-xl bg-slate-100 ${item.color} shrink-0 group-hover:scale-105 transition-transform`}>
                         <item.icon className="h-4 w-4" />
@@ -167,27 +166,18 @@ export const PublicNavbar: React.FC = () => {
           </div>
         </nav>
 
-        {/* Right: Auth Action Buttons (ALWAYS shows Login & Sign Up) */}
+        {/* Right: Auth Action Buttons (Strictly Log In and Sign Up) */}
         <div className="hidden md:flex items-center gap-3">
-          {isAuthenticated && (
-            <Link
-              to="/dashboard"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-full text-xs transition-colors border border-indigo-100 mr-1"
-            >
-              <UserCheck className="h-3.5 w-3.5 text-indigo-600" /> Dashboard
-            </Link>
-          )}
-
           <Link
             to="/login"
-            className="px-4 py-2 text-xs font-extrabold text-slate-700 hover:text-indigo-600 transition-colors"
+            className="px-4 py-2 text-xs font-extrabold text-slate-700 hover:text-indigo-600 transition-colors cursor-pointer"
           >
             Log In
           </Link>
 
           <Link
             to="/register"
-            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-full text-xs shadow-md shadow-indigo-500/20 transition-all hover:scale-105"
+            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-full text-xs shadow-md shadow-indigo-500/20 transition-all hover:scale-105 cursor-pointer"
           >
             Sign Up <ArrowRight className="h-3.5 w-3.5" />
           </Link>
@@ -196,7 +186,7 @@ export const PublicNavbar: React.FC = () => {
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100"
+          className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -219,15 +209,6 @@ export const PublicNavbar: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5">
-              {isAuthenticated && (
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 bg-indigo-50 border border-indigo-100 text-indigo-700 font-extrabold rounded-xl text-xs"
-                >
-                  Go to Dashboard
-                </Link>
-              )}
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
