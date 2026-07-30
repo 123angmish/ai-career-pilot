@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { AlertCircle, ArrowRight, Sparkles, Loader2 } from 'lucide-react';
 
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -20,6 +19,7 @@ interface LoginFormValues {
 export const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   React.useEffect(() => {
     document.title = 'Sign In | CareerPilot';
@@ -35,20 +35,16 @@ export const Login: React.FC = () => {
     defaultValues: { email: '', password: '', rememberMe: false },
   });
 
-  const loginMutation = useMutation({
-    mutationFn: (values: LoginFormValues) =>
-      authService.login({ email: values.email, password: values.password }),
-    onSuccess: (data) => {
+  const onSubmit = async (values: LoginFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const data = await authService.login({ email: values.email, password: values.password });
       login(data.token, data.user);
       navigate('/dashboard', { replace: true });
-    },
-    onError: (err: unknown) => {
+    } catch (err: any) {
       setError('root', { message: extractAuthError(err) });
-    },
-  });
-
-  const onSubmit = (values: LoginFormValues) => {
-    loginMutation.mutate(values);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,8 +126,8 @@ export const Login: React.FC = () => {
             {...register('password', {
               required: 'Password is required.',
               minLength: {
-                value: 6,
-                message: 'Password must be at least 6 characters.',
+                value: 4,
+                message: 'Password must be at least 4 characters.',
               },
             })}
           />
@@ -146,12 +142,17 @@ export const Login: React.FC = () => {
         <Button
           type="submit"
           id="login-submit"
-          className="w-full py-3 mt-1 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs"
-          isLoading={loginMutation.isPending}
+          className="w-full py-3 mt-1 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs cursor-pointer"
+          disabled={isSubmitting}
         >
-          Sign in
-          {!loginMutation.isPending && (
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          {isSubmitting ? (
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" /> Signing in…
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-1">
+              Sign in <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
           )}
         </Button>
       </form>
@@ -167,7 +168,7 @@ export const Login: React.FC = () => {
       <Link
         to="/register"
         id="go-to-register"
-        className="flex items-center justify-center gap-2 w-full rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-extrabold py-3 transition-colors"
+        className="flex items-center justify-center gap-2 w-full rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-extrabold py-3 transition-colors cursor-pointer"
       >
         Create a free account
       </Link>

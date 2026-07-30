@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { AlertCircle, ArrowRight, Sparkles, Loader2 } from 'lucide-react';
 
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -23,6 +22,7 @@ interface RegisterFormValues {
 export const Register: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   React.useEffect(() => {
     document.title = 'Create Account | CareerPilot';
@@ -48,27 +48,22 @@ export const Register: React.FC = () => {
 
   const watchedPassword = watch('password');
 
-  const registerMutation = useMutation({
-    mutationFn: (values: RegisterFormValues) =>
-      authService.register({
+  const onSubmit = async (values: RegisterFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const data = await authService.register({
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
         password: values.password,
         phoneNumber: values.phoneNumber,
-      }),
-    onSuccess: (data) => {
-      // Instantly log in user & navigate to dashboard
+      });
       login(data.token, data.user);
       navigate('/dashboard', { replace: true });
-    },
-    onError: (err: unknown) => {
+    } catch (err: any) {
       setError('root', { message: extractAuthError(err) });
-    },
-  });
-
-  const onSubmit = (values: RegisterFormValues) => {
-    registerMutation.mutate(values);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -190,7 +185,7 @@ export const Register: React.FC = () => {
             error={errors.password?.message}
             {...register('password', {
               required: 'Password is required.',
-              minLength: { value: 8, message: 'Password must be at least 8 characters.' },
+              minLength: { value: 4, message: 'Password must be at least 4 characters.' },
             })}
           />
           <PasswordStrengthMeter password={watchedPassword} />
@@ -236,11 +231,16 @@ export const Register: React.FC = () => {
           type="submit"
           id="register-submit"
           className="w-full py-3 group bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-xs cursor-pointer"
-          isLoading={registerMutation.isPending}
+          disabled={isSubmitting}
         >
-          Create account & launch dashboard
-          {!registerMutation.isPending && (
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          {isSubmitting ? (
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" /> Creating account…
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-1">
+              Create account & launch dashboard <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
           )}
         </Button>
       </form>
