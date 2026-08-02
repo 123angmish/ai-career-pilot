@@ -18,7 +18,9 @@ import {
   Award,
   Globe,
   Pin,
-  Briefcase
+  Briefcase,
+  FileText,
+  Link2
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -48,6 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
         { name: 'Resume Builder', path: '/resumes/builder', icon: Wand2 },
         { name: 'ATS Analyzer', path: '/resumes/analysis', icon: FileCheck },
         { name: 'Skill Gap Analyzer', path: '/resumes/jd-match', icon: GitCompare },
+        { name: 'Cover Letter', path: '/cover-letter', icon: FileText },
         { name: 'Career Roadmap', path: '/career-path', icon: Compass },
       ]
     },
@@ -64,6 +67,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed })
       category: 'AI TOOLS & LEARNING',
       items: [
         { name: 'AI Career Assistant', path: '/chat', icon: MessageSquare },
+        { name: 'LinkedIn Enhancer', path: '/services/linkedin', icon: Link2 },
         { name: 'Learning & Projects', path: '/services/courses', icon: Award },
       ]
     },
